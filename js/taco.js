@@ -95,16 +95,16 @@ function initialize() {
     }
 
     activeImage = {
-        url: '/images/taco_truck_sm_active.png',
-        size: new google.maps.Size(94, 50),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(0, 32)
+       url: 'taco_truck_sm.png',
+       size: new google.maps.Size(60, 60),
+       origin: new google.maps.Point(0, 0),
+       anchor: new google.maps.Point(0, 32)
     };
     image = {
-        url: '/images/taco_truck_sm.png',
-        size: new google.maps.Size(94, 50),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(0, 32)
+       url: 'taco_truck_sm.png',
+       size: new google.maps.Size(60, 60),
+       origin: new google.maps.Point(0, 0),
+       anchor: new google.maps.Point(0, 32)
     };
 }
 
