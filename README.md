@@ -16,7 +16,7 @@ rules:
 - lng must be >= -180 and <= 180
 - lat must be >= 0 and <= 90
 
-
+```
     {
       "rules": {
         ".read": true,
@@ -33,3 +33,4 @@ rules:
           }
       }
     }
+```
