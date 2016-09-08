@@ -43,14 +43,14 @@ function setupMap(mapOptions) {
 function initialize() {
     var mapOptions = {
       zoom: 12,
-      center: new google.maps.LatLng(39.833333, -98.583333)
+      center: new google.maps.LatLng(38.897885, -77.036508)
     };
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
             mapOptions.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
             setupMap(mapOptions);
         }, function error(msg) {
-            mapOptions.zoom = 5;
+            mapOptions.zoom = 17;
             setupMap(mapOptions);
         });
     } else {
