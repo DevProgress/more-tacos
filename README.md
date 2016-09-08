@@ -2,6 +2,16 @@
 
 Display a Google map with a draggable taco truck marker.  On save, write coordinates to a Firebase database.  Get markers placed by others and display on the map.
 
+https://devprogress.us/more-tacos/
+
+## local setup
+
+Clone this repo
+
+Run `python -m SimpleHTTPServer 8888`
+
+Go to `http://127.0.0.1:8888/`
+
 ## Firebase config
 
 Taco truck icon coordinates stored in /trucks/_generatedId_:
