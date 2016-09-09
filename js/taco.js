@@ -108,7 +108,7 @@ function initialize() {
             lat = parseInt(coords[0]);
             lng = parseInt(coords[1]);
             if (lat >= 0 && lat < 90 && lng >= -180 && lng <= 180) {
-                mapOptions.center = new google.maps.LatLng(lat, lng);
+                mapOptions.center = new google.maps.LatLng(lng, lat);
                 return setupMap(mapOptions);
             }
         } catch (e) {
