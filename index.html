@@ -11,18 +11,25 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
   </head>
   <body>
+      <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.7&appId=142896685791962";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
       <div id="intro_text">
           <h2>In case you missed it, Marco Gutierrez from Latinos for Trump claimed that immigration will lead to ‘taco trucks on every corner'.</h2>
           <h3>
           Sounds like a dream, right? Unfortunately, we’d need a lot more taco trucks to reach that lofty goal. That’s where you come in: please add a virtual taco truck to the map below. You can put a taco truck outside your house, send one to a friend, put one outside Trump headquarters, or send one anywhere else that needs more tacos. For each virtual taco truck, we’re suggesting a $10 donation to the Hillary For America campaign because, quite frankly, she’s our best chance to save the tacos.</h3>
       </div>
+      <div id="vtt"><div id="map" style="height: 400px; width: 100%"></div>
       <div id="share">
           <h4>Spread the Taco Love!</h4>
-          <a href="http://facebook.com/sharer/sharer.php?u=http://tacotruck.party">Facebook</a>
-          <a href="http://twitter.com/intent/tweet?url=http://tacotruck.party&text=I%20just%20sponsored%20a%20virtual%20taco%20truck.%20You%20can,%20too!&hashtags=SaveTheTacos.">Twitter</a>
+          <div class="fb-share-button" data-href="http://tacotruck.party" data-layout="button" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Share</a></div>
+          <a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-text="I just sponsored a virtual taco truck. You can too!" data-url="http://tacotruck.party" data-hashtags="SaveTheTacos" data-show-count="false">Tweet</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
       </div>
-      <div id="vtt">
-        <div id="map" style="height: 400px; width: 100%"></div>
     </div>
     <button id="save" style="font-size: 24px; font-weight: bold; margin-top: 20px">Save</button>
     <br>
