@@ -107,6 +107,22 @@ function setupMap(mapOptions) {
         var val = data.val();
         addMarker(new google.maps.LatLng(val.lat, val.lng));
     });
+    infowindow = new google.maps.InfoWindow({
+        content: $('#info-content').html()
+    });
+    // show tooltip for 10 seconds
+    var tooltip = new google.maps.InfoWindow({
+        content: $('#tooltip').html()
+    });
+    tooltip.open(map, activeMarker);
+    window.setTimeout(function() {
+        tooltip.close();
+    }, 10000);
+    // position buttons
+    var mapWidth = $('#map').width();
+    var saveWidth = $('#save-button').width();
+    $('#save-button').css({left: parseInt(mapWidth/2 - saveWidth/2)+'px'});
+    $('#social').css({left: (mapWidth-160)+'px'});
 }
 
 function initialize() {
@@ -181,8 +197,5 @@ $(function() {
 
         // open info window
         infowindow.open(map, activeMarker);
-
-
-
     });
 });

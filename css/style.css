@@ -51,3 +51,20 @@ h1 {
 .info-content {
     display: none;
 }
+
+#save-button {
+    position: absolute;
+    z-index: 100;
+    top: 10px;
+}
+
+#social {
+    position: absolute;
+    z-index: 100;
+    top: 10px;
+}
+
+#social div {
+    display: inline-block;
+    margin-left: 10px;
+}
