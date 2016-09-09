@@ -107,12 +107,6 @@ function setupMap(mapOptions) {
         var val = data.val();
         addMarker(new google.maps.LatLng(val.lat, val.lng));
     });
-
-    // set info content html
-    infowindow = new google.maps.InfoWindow({
-        content: $('.info-content').html()
-    });
-
 }
 
 function initialize() {
@@ -179,7 +173,16 @@ $(function() {
             addMarker(new google.maps.LatLng(lat - 0.01, lng), true);
         }, 500);
 
+
+        // set info content html
+        infowindow = new google.maps.InfoWindow({
+            content: $('.info-content').html()
+        });
+
         // open info window
         infowindow.open(map, activeMarker);
+
+
+
     });
 });
