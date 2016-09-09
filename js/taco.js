@@ -7,12 +7,12 @@ var config = {
 firebase.initializeApp(config);
 var trucksRef = firebase.database().ref('trucks');
 
-var map, lat, lng, activeImage, image;
+var markers = [],
+    map, lat, lng, activeImage, image, markerClusterer;
 
 function addMarker(coord, isActive) {
     var options = {
         position: coord,
-        map: map,
         zIndex: 10,
     };
     if (isActive) {
@@ -28,7 +28,42 @@ function addMarker(coord, isActive) {
             lng = event.latLng.lng();
             console.log('drag end: lat='+lat+' lng='+lng);
         });
+    } else {
+
+        markerClusterer = markerClusterer || new MarkerClusterer(map, markers, {
+            styles: [
+                {
+                    height: 52,
+                    width: 53,
+                    url: '/images/m1.png'
+                },
+                {
+                    height: 56,
+                    width: 55,
+                    url: '/images/m2.png'
+                },
+                {
+                    height: 66,
+                    width: 65,
+                    url: '/images/m3.png'
+                },
+                {
+                    height: 78,
+                    width: 77,
+                    url: '/images/m4.png'
+                },
+                {
+                    height: 90,
+                    width: 89,
+                    url: '/images/m5.png'
+                }
+            ]
+        });
+        markers.push(marker);
+        console.log('add marker to clusterer');
+        markerClusterer.addMarker(marker);
     }
+
 }
 
 function setupMap(mapOptions) {
@@ -45,6 +80,7 @@ function initialize() {
       zoom: 12,
       center: new google.maps.LatLng(38.897885, -77.036508)
     };
+
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
             mapOptions.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -57,17 +93,18 @@ function initialize() {
         mapOptions.zoom = 5;
         setupMap(mapOptions);
     }
+
     activeImage = {
-       url: 'taco_truck_sm_active.png',
-       size: new google.maps.Size(94, 50),
-       origin: new google.maps.Point(0, 0),
-       anchor: new google.maps.Point(0, 32)
+        url: '/images/taco_truck_sm_active.png',
+        size: new google.maps.Size(94, 50),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(0, 32)
     };
     image = {
-       url: 'taco_truck_sm.png',
-       size: new google.maps.Size(94, 50),
-       origin: new google.maps.Point(0, 0),
-       anchor: new google.maps.Point(0, 32)
+        url: '/images/taco_truck_sm.png',
+        size: new google.maps.Size(94, 50),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(0, 32)
     };
 }
 
