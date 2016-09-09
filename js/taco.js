@@ -136,7 +136,7 @@ $(function() {
         var key = firebase.database().ref().child('trucks').push().key;
         var update = {};
         update['/trucks/'+key] = {lat: lat, lng: lng};
-        //firebase.database().ref().update(update);
+        firebase.database().ref().update(update);
         location.hash = lat+'_'+lng;
         $('#save').hide();
         // change icon
