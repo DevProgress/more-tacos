@@ -11,10 +11,15 @@ var markers = [],
     map, lat, lng, activeImage, image, markerClusterer, activeMarker, infowindow;
 
 function addMarker(coord, isActive) {
+
+    // set up default options for a marker
     var options = {
         position: coord,
         zIndex: 10,
     };
+
+    // if marker is active, set specific options
+    // if default, set the default image
     if (isActive) {
         options.icon = activeImage;
         options.draggable = true;
@@ -23,14 +28,23 @@ function addMarker(coord, isActive) {
     } else {
         options.icon = image;
     }
+
+
+    // create the new marker
     var marker = new google.maps.Marker(options);
+
+    // if active marker, set up the drag end event and set this marker as the active marker
+    // if inactive marker, push to the cluster of markers
     if (isActive) {
+
         google.maps.event.addListener(marker,'dragend',function(event)  {
             lat = event.latLng.lat();
             lng = event.latLng.lng();
             console.log('drag end: lat='+lat+' lng='+lng);
         });
+
         activeMarker = marker;
+
     } else {
 
         markerClusterer = markerClusterer || new MarkerClusterer(map, markers, {
@@ -62,24 +76,36 @@ function addMarker(coord, isActive) {
                 }
             ]
         });
+
         markers.push(marker);
+
         console.log('add marker to clusterer');
+
         markerClusterer.addMarker(marker);
+
     }
 
 }
 
+// setup the map
+
 function setupMap(mapOptions) {
+
+
+    // create map object
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+    // set lat/lng
     lat = mapOptions.center.lat();
     lng = mapOptions.center.lng();
+
+    // create the draggable marker for the user to set a taco truck
     addMarker(mapOptions.center, true);
+
+    // watch for locations being added to firebase db; push them to the map
     trucksRef.on('child_added', function(data) {
         var val = data.val();
         addMarker(new google.maps.LatLng(val.lat, val.lng));
-    });
-    infowindow = new google.maps.InfoWindow({
-        content: $('.info-content').html()
     });
 }
 
@@ -138,9 +164,7 @@ $(function() {
         update['/trucks/'+key] = {lat: lat, lng: lng};
         firebase.database().ref().update(update);
         location.hash = lat+'_'+lng;
-        // $('#save').hide();
-        // show hidden success content
-        $('#info-content').show();
+
         // change icon
         activeMarker.setIcon(image);
         activeMarker.setAnimation(google.maps.Animation.BOUNCE);
@@ -154,7 +178,16 @@ $(function() {
             }
         }, 500);
 
+
+        // set info content html
+        infowindow = new google.maps.InfoWindow({
+            content: $('.info-content').html()
+        });
+
         // open info window
         infowindow.open(map, activeMarker);
+
+
+
     });
 });
