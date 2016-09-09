@@ -138,12 +138,13 @@ $(function() {
         update['/trucks/'+key] = {lat: lat, lng: lng};
         firebase.database().ref().update(update);
         location.hash = lat+'_'+lng;
-        $('#save').hide();
+        // $('#save').hide();
         // change icon
         activeMarker.setIcon(image);
         activeMarker.setAnimation(google.maps.Animation.BOUNCE);
         window.setTimeout(function() {
             activeMarker.setAnimation(null);
+            addMarker(new google.maps.LatLng(lat, lng), true);
         }, 500);
         // set URLs for share buttons
         /*
