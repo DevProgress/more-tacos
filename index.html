@@ -1,5 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+<!--
+ ____             ____
+|  _ \  _____   _|  _ \ _ __ ___   __ _ _ __ ___  ___ ___  _   _ ___
+| | | |/ _ \ \ / / |_) | '__/ _ \ / _` | '__/ _ \/ __/ __|| | | / __|
+| |_| |  __/\ V /|  __/| | | (_) | (_| | | |  __/\__ \__ \| |_| \__ \
+|____/ \___| \_/ |_|   |_|  \___/ \__, |_|  \___||___/___(_)__,_|___/
+                                  |___/
+ xxxxxxxxxxxxxxxxxxxxxxx
+x                     //x
+x   xxxxxxxxxxxxxxxxx///x   We are volunteers using our skills and expertise
+x  x                 x//x   to create tech tools to help elect Hillary
+x  x                 x//x   Clinton and other Democratic and progressive
+x  x     .           x//x   candidates. We are coders, designers, leaders,
+x  x  __.'.__        x//x   writers, mentors, and researchers. Each project
+x  x '-.   .-'       x//x   we work on focuses on an app, service, data
+x  x   /.'.\         x//x   resource, or other technology to advance the
+x  x   '   '         x//x   cause. We are a team — join us!
+x   xxxxxxxxxxxxxxxxx///x
+x///////////////////////x   http://DevProgress.us
+ xxxxxxxxxxxxxxxxxxxxxxx
+
+-->
   <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -8,33 +30,89 @@
     <meta property="og:title" content="Virtual taco truck"/>
     <meta property="og:description" content="Buy a virtual taco truck and share with your friends.  Vote for Hillary on November 8."/>
     <meta property="og:image" content="images/preview.png">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css" />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+
+    <meta property="og:url" content="http://www.your-domain.com/your-page.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Virtual taco truck" />
+    <meta property="og:description" content="Working toward a taco truck on every corner." />
+    <meta property="og:image" content="https://devprogress.us/more-tacos/taco_truck.png" />
   </head>
 
-  <body>
-      <div id="intro_text">
-          <h2>In case you missed it, Marco Gutierrez from Latinos for Trump claimed that immigration will lead to ‘taco trucks on every corner'.</h2>
-          <h3>
-          Sounds like a dream, right? Unfortunately, we’d need a lot more taco trucks to reach that lofty goal. That’s where you come in: please add a virtual taco truck to the map below. You can put a taco truck outside your house, send one to a friend, put one outside Trump headquarters, or send one anywhere else that needs more tacos. For each virtual taco truck, we’re suggesting a $10 donation to the Hillary For America campaign because, quite frankly, she’s our best chance to save the tacos.</h3>
-      </div>
-      <div id="vtt">
-        <div id="map" style="height: 400px; width: 100%"></div>
+  <body class="container">
+    <div class="row header">
+        <div class="col-sm-6 headline">
+            <h1>Taco Truckify</h1>
+            <h4>Taco trucks on every corner? Sounds like a dream!</h4>
+        </div>
+        <div class="col-sm-6 description">
+            When a Trump supporter warned that immigration would lead to "taco trucks on every corner," we thought that sounded like a great idea.  Help make it a reality -- add your own virtual taco truck to the map, then tell your friends.
+        </div>
     </div>
-    <button id="save" style="font-size: 24px; font-weight: bold; margin-top: 20px">Save</button>
-    <br>
-    <h3><a href='https://www.hillaryclinton.com/donate/?amount=10.00&utm_source=moretacos'>Save the tacos. Support Hillary.</a></h3>
+    <div class="row">
+        <div class="col-sm-12">
+            <div id="map"></div>
+        </div>
+    </div>
+    <div class="row footer">
+        <div class="col-sm-12">
+            <button id="save" class="btn btn-primary">Save truck location</button>
+        </div>
+        <div class="col-sm-12 social">
+        </div>
+    </div>
+    <div class="row footer">
+        <div class="col-sm-12 attribution">
+            Built by <a href="http://devprogress.us">DevProgress</a>
+        </div>
+    </div>
 
-    <h6>Built by <a href='http://devprogress.us'>DevProgress</a></h6>
+    <div class="info-content">
+        <div class="donate">
+            Thanks! Together we can make a difference.
 
+            <!-- donate -->
+            <button class="btn btn-primary">
+                <a href="https://www.hillaryclinton.com/donate/?amount=3.00&utm_source=tacotruckify" target="donate">Donate $3 to Hillary</a>
+            </button>
+
+            <!-- TODO: get these working -->
+            <!-- twitter -->
+            <!--
+            <blockquote class="twitter-tweet"><p lang="en" dir="ltr">
+                I just put a (virtual) taco truck on the map. Hopefully, when the taco truck invasion happens, they’ll put a real taco truck there! TRUCK_URL  <a href="https://twitter.com/hashtag/imwithher?src=hash">#ImWithHer</a>
+            </blockquote>
+            -->
+            <!-- facebook -->
+            <!--
+            <div class="fb-share-button" data-href="TRUCK_URL" data-layout="button" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=TRUCK_URL_ENCODED&amp;src=sdkpreparse">Share</a></div>
+            -->
+        </div>
+        <div class="share">
+            <div>
+                Ask your friends to add a taco truck too.
+            </div>
+        </div>
+    </div>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
-    <script src="/js/lib/markerclusterer.min.js"></script>
-    <script src="/js/taco.js"></script>
-
+    <script src="js/lib/markerclusterer.min.js"></script>
+    <script src="js/taco.js"></script>
     <script async defer
          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0xQ57bjRAv9JpC-u14Ps0DwG7EDFJAzU&callback=initialize">
     </script>
 
+    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.7";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
   </body>
 </html>
