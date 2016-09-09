@@ -105,10 +105,10 @@ function initialize() {
     if (location.hash) {
         var coords = location.hash.replace('#', '').split(/_/);
         try {
-            lat = parseInt(coords[0]);
-            lng = parseInt(coords[1]);
+            lat = parseFloat(coords[1]);
+            lng = parseFloat(coords[0]);
             if (lat >= 0 && lat < 90 && lng >= -180 && lng <= 180) {
-                mapOptions.center = new google.maps.LatLng(lng, lat);
+                mapOptions.center = new google.maps.LatLng(lat, lng);
                 return setupMap(mapOptions);
             }
         } catch (e) {
