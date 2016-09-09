@@ -138,22 +138,20 @@ $(function() {
         update['/trucks/'+key] = {lat: lat, lng: lng};
         firebase.database().ref().update(update);
         location.hash = lat+'_'+lng;
+
+        // hide save button
         $('#save').hide();
+
+        // show hidden success content
+        $('#info-content').show();
+
         // change icon
         activeMarker.setIcon(image);
         activeMarker.setAnimation(google.maps.Animation.BOUNCE);
         window.setTimeout(function() {
             activeMarker.setAnimation(null);
         }, 500);
-        // set URLs for share buttons
-        /*
-        var html = $('.twitter-tweet').html();
-        $('.twitter-tweet').html(html.replace('TRUCK_URL', window.location.href));
-        $('.fb-share-button').attr('data-href', window.location.href);
-        var url = 'https://www.facebook.com/sharer/sharer.php?u='+
-            encodeURIComponent(window.location.href)+'&amp;src=sdkpreparse';
-        $('.fb-xfbml-parse-ignore').attr('href', url);
-        */
+
         // open info window
         infowindow.open(map, activeMarker);
     });
