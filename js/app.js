@@ -64,6 +64,7 @@ var CONFIG = {
     },
     // ELement selector for the inital tooltip save prompt.
     initialMessage: '#initial-content',
+    initialMessageWithPos: '#initial-content-with-initial-pos',
     // ELement selector for the save prompt after initial drag.
     savePrompt: '#save-content',
     // format values for marker icons
@@ -135,6 +136,12 @@ var TacoMap = function(mapEl, database, initialPosition, initialZoom) {
     zIndex: 10
   });
 
+  if (initialPosition) {
+      this._iw.setContent($(CONFIG.TACO_MAP.initialMessageWithPos).html());
+  } else {
+      this._iw.setContent($(CONFIG.TACO_MAP.initialMessage).html());
+  }
+
   /** @private {boolean} Whether or not this has been initialized. */
   this._isInitialized = false;
 
@@ -159,7 +166,6 @@ TacoMap.prototype._init = function() {
     return this;
   }
 
-  this._iw.setContent($(CONFIG.TACO_MAP.initialMessage).html());
   this._iw.open(this._map, this._userMarker);
 
   google.maps.event.addListenerOnce(this._userMarker, 'dragend', function() {
