@@ -76,6 +76,8 @@ var CONFIG = {
 
     // Element selector for save confirmation message.
     saveConfirmation: '#info-content',
+    // tooltip for what to do; shown on initial map draw
+    tooltip: '#tooltip',
     // Element selector for save error message.
     saveError: '#error-content',
     // Default initial map zoom level.
@@ -113,6 +115,7 @@ var TacoMap = function(mapEl, database, initialPosition, initialZoom) {
 
   /** @private {google.maps.InfoWindow} Pop-up window for the map. */
   this._iw = new google.maps.InfoWindow();
+  this._tooltip = new google.maps.InfoWindow();
 
   /** @private {google.maps.Marker} The user's draggable marker. */
   this._userMarker = new google.maps.Marker({
@@ -154,6 +157,14 @@ TacoMap.prototype._init = function() {
   if (this.isInitialized) {
     return this;
   }
+
+    // Display the donation/share CTA.
+  this._tooltip.setContent($(CONFIG.TACO_MAP.tooltip).html());
+  this._tooltip.open(this._map, this._userMarker);
+  var tooltip = this._tooltip;
+  window.setTimeout(function() {
+      tooltip.close();
+  }, 10000);
 
   this._db.ref('trucks').on('child_added', function(data) {
     this.addMarker({
