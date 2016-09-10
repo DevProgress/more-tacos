@@ -38,40 +38,45 @@ x///////////////////////x   http://DevProgress.us
     <meta property="og:title" content="Virtual taco truck" />
     <meta property="og:description" content="Working toward a taco truck on every corner." />
     <meta property="og:image" content="https://devprogress.us/more-tacos/taco_truck.png" />
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
   </head>
   <body class="container">
     <div class="row header">
-        <div class="col-sm-6 headline">
-            <h1>TacoTruck.Party</h1>
-            <h4>Put a virtual taco truck somewhere funny. Then tell your friends.</h4>
+        <div class="col-sm-5">
+            <img class="img-responsive" src="images/taco_truck_logo.png" alt="">
+            <h1 class="h4 headline"><strong>Put a virtual taco truck somewhere funny. <br>Then tell your friends.</strong></h1>
         </div>
-        <div class="col-sm-6 description">
-            When a Trump supporter warned that immigration would lead to "taco trucks on every corner," we thought that sounded like a great idea.  Help make it a reality -- add your own virtual taco truck to the map, then tell your friends.
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-12 map-row">
-            <!-- positioned over map -->
-            <div id="save-button">
-                <button id="save" class="btn btn-primary">Save truck location</button>
-            </div>
-            <div id="social">
-                <div class="donate">
-                    <a class="btn btn-primary btn-xs" href="https://www.hillaryclinton.com/donate/?amount=3.00&utm_source=tacotruckify" target="donate">
-                        Donate
-                    </a>
-                </div>
-                <div class="fb-share-button" data-href="http://tacotruck.party" data-layout="button" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Ftacotruck.party&amp;src=sdkpreparse">Share</a></div>
-                <div class="twitter">
-                    <a href="https://twitter.com/share" class="twitter-share-button" data-size="1" data-text="I just sponsored a virtual taco truck. You can too!" data-url="http://tacotruck.party" data-hashtags="SaveTheTacos" data-show-count="false">Tweet</a>
-                </div>
-            </div>
-            <div id="map"></div>
+        <div class="col-sm-7 description">
+            <p class="lead">When a Trump supporter warned that immigration would lead to "taco trucks on every corner," we thought that sounded like a great idea.  Help make it a reality -- add your own virtual taco truck to the map, then tell your friends.</p>
         </div>
     </div>
+    <section class="map-wrapper">
+        <div class="row">
+            <div class="col-sm-12 map-row">
+                <!-- positioned over map -->
+                <div id="save-button">
+                    <button id="save" class="btn btn-primary">Save truck location</button>
+                </div>
+                <div id="social">
+                    <div class="donate">
+                        <a class="btn btn-primary btn-xs" href="https://www.hillaryclinton.com/donate/?amount=3.00&utm_source=tacotruckify" target="donate">
+                            Donate
+                        </a>
+                    </div>
+                    <div class="fb-share-button" data-href="http://tacotruck.party" data-layout="button" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Ftacotruck.party&amp;src=sdkpreparse">Share</a></div>
+                    <div class="twitter">
+                        <a href="https://twitter.com/share" class="twitter-share-button" data-size="1" data-text="I just sponsored a virtual taco truck. You can too!" data-url="http://tacotruck.party" data-hashtags="SaveTheTacos" data-show-count="false">Tweet</a>
+                    </div>
+                </div>
+                <div id="map"></div>
+            </div>
+        </div>
+    </section>
     <div class="row footer">
         <div class="col-sm-12 attribution">
-            Built by <a href="http://devprogress.us">DevProgress</a>
+            Built by <a href="http://devprogress.us">
+                <strong>DevProgress</strong>
+            </a>
         </div>
     </div>
 
