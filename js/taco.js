@@ -90,8 +90,6 @@ function addMarker(coord, isActive) {
 // setup the map
 
 function setupMap(mapOptions) {
-
-
     // create map object
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
@@ -107,6 +105,24 @@ function setupMap(mapOptions) {
         var val = data.val();
         addMarker(new google.maps.LatLng(val.lat, val.lng));
     });
+    infowindow = new google.maps.InfoWindow({
+        content: $('#info-content').html()
+    });
+    // show tooltip for 10 seconds
+    var tooltip = new google.maps.InfoWindow({
+        content: $('#tooltip').html()
+    });
+    tooltip.open(map, activeMarker);
+    window.setTimeout(function() {
+        tooltip.close();
+    }, 10000);
+    // position buttons
+    var mapWidth = $('#map').width();
+    var saveWidth = $('#save-button').width();
+    //$('#save-button').css({top: '10px', left: parseInt(mapWidth/2 - saveWidth/2)+'px'});
+    $('#social').css({top: '10px', left: (mapWidth-50)+'px'});
+    google.maps.event.addListenerOnce(map, 'idle', function() {
+    });
 }
 
 function initialize() {
@@ -114,18 +130,19 @@ function initialize() {
        url: '/images/taco_truck_active.png',
        size: new google.maps.Size(60, 60),
        origin: new google.maps.Point(0, 0),
-       anchor: new google.maps.Point(0, 30)
+       anchor: new google.maps.Point(30, 30)
     };
     image = {
        url: '/images/taco_truck.png',
        size: new google.maps.Size(60, 60),
        origin: new google.maps.Point(0, 0),
-       anchor: new google.maps.Point(0, 30)
+       anchor: new google.maps.Point(0, 0)
     };
 
     var mapOptions = {
-      zoom: 15,
-      center: new google.maps.LatLng(38.897885, -77.036508)
+        zoom: 15,
+        center: new google.maps.LatLng(38.897885, -77.036508),
+        mapTypeControl: false
     };
 
     if (location.hash) {
@@ -175,7 +192,12 @@ $(function() {
         activeMarker.setAnimation(google.maps.Animation.BOUNCE);
         window.setTimeout(function() {
             activeMarker.setAnimation(null);
-            addMarker(new google.maps.LatLng(lat - 0.01, lng), true);
+            // Should always have a map by this point, but just in case....
+            if (map) {
+                zoomLevel = map.getZoom();
+                offset = Math.pow(2, 3-zoomLevel);
+                addMarker(new google.maps.LatLng(lat - offset, lng - offset), true);
+            }
         }, 500);
 
 
@@ -186,8 +208,5 @@ $(function() {
 
         // open info window
         infowindow.open(map, activeMarker);
-
-
-
     });
 });

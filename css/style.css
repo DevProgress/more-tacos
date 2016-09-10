@@ -36,6 +36,11 @@ h1 {
     color: #fff;
 }
 
+.donate .btn-primary {
+    background-color: #254da3;
+    border-color: #254da3;
+}
+
 .btn-primary a {
     color: #fff;
 }
@@ -50,4 +55,27 @@ h1 {
 
 .info-content {
     display: none;
+}
+
+#save-button {
+    position: absolute;
+    z-index: 100;
+    top: 5px;
+    left: 20px;
+}
+
+#social {
+    position: absolute;
+    z-index: 100;
+    top: 10px;
+    left: 200px;
+}
+
+#social div {
+    margin-right: 15px;
+    margin-bottom: 5px;
+}
+
+.map-row {
+    position: relative;
 }

@@ -33,7 +33,7 @@ x///////////////////////x   http://DevProgress.us
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css" />
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/style.css" />
-    <meta property="og:url" content="http://www.your-domain.com/your-page.html" />
+    <meta property="og:url" content="http://tacotruck.party" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Virtual taco truck" />
     <meta property="og:description" content="Working toward a taco truck on every corner." />
@@ -43,25 +43,30 @@ x///////////////////////x   http://DevProgress.us
     <div class="row header">
         <div class="col-sm-6 headline">
             <h1>TacoTruck.Party</h1>
-            <h4>Put a virtual taco truck somewhere funny. Then tell your friend.</h4>
+            <h4>Put a virtual taco truck somewhere funny. Then tell your friends.</h4>
         </div>
         <div class="col-sm-6 description">
             When a Trump supporter warned that immigration would lead to "taco trucks on every corner," we thought that sounded like a great idea.  Help make it a reality -- add your own virtual taco truck to the map, then tell your friends.
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-12 map-row">
+            <!-- positioned over map -->
+            <div id="save-button">
+                <button id="save" class="btn btn-primary">Save truck location</button>
+            </div>
+            <div id="social">
+                <div class="donate">
+                    <a class="btn btn-primary btn-xs" href="https://www.hillaryclinton.com/donate/?amount=3.00&utm_source=tacotruckify" target="donate">
+                        Donate
+                    </a>
+                </div>
+                <div class="fb-share-button" data-href="http://tacotruck.party" data-layout="button" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Ftacotruck.party&amp;src=sdkpreparse">Share</a></div>
+                <div class="twitter">
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-size="1" data-text="I just sponsored a virtual taco truck. You can too!" data-url="http://tacotruck.party" data-hashtags="SaveTheTacos" data-show-count="false">Tweet</a>
+                </div>
+            </div>
             <div id="map"></div>
-        </div>
-    </div>
-    <div class="row footer">
-        <div class="col-sm-12 description">
-            Drag the blue truck to a funny location, then click/tap it to allow others to see it.
-        </div>
-        <div class="col-sm-12">
-            <button id="save" class="btn btn-primary">Save truck location</button>
-        </div>
-        <div class="col-sm-12 social">
         </div>
     </div>
     <div class="row footer">
@@ -70,19 +75,24 @@ x///////////////////////x   http://DevProgress.us
         </div>
     </div>
 
+    <!-- map content -->
+    <div id="tooltip" class="info-content">
+        Drag the taco truck, then click Save.
+    </div>
     <div id="info-content" class="info-content">
         <div class="donate">
             Thanks! Together we can make a difference.
-
+            <br>
             <!-- donate -->
             <a href="https://www.hillaryclinton.com/donate/?amount=3.00&utm_source=tacotruckify" target="donate" class="btn btn-primary">Donate $3 to Hillary</a>
 
-        <div class="share">
-            <div>
-                Ask your friends to add a taco truck too.
+            <div class="share">
+              <div>
+                  Ask your friends to add a taco truck too.
+              </div>
+              <div class="fb-share-button" data-href="http://tacotruck.party" data-layout="button" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%tacotruck.party">Share</a></div>
+              <a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-text="I just sponsored a virtual taco truck. You can too!" data-url="http://tacotruck.party" data-hashtags="SaveTheTacos" data-show-count="false">Tweet</a>
             </div>
-            <div class="fb-share-button" data-href="http://tacotruck.party" data-layout="button" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%tacotruck.party">Share</a></div>
-            <a href="https://twitter.com/share" class="twitter-share-button" data-size="large" data-text="I just sponsored a virtual taco truck. You can too!" data-url="http://tacotruck.party" data-hashtags="SaveTheTacos" data-show-count="false">Tweet</a>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
