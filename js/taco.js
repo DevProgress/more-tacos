@@ -111,13 +111,13 @@ function setupMap(mapOptions) {
 
 function initialize() {
     activeImage = {
-       url: 'taco_truck_active.png',
+       url: '/images/taco_truck_active.png',
        size: new google.maps.Size(60, 60),
        origin: new google.maps.Point(0, 0),
        anchor: new google.maps.Point(0, 30)
     };
     image = {
-       url: 'taco_truck.png',
+       url: '/images/taco_truck.png',
        size: new google.maps.Size(60, 60),
        origin: new google.maps.Point(0, 0),
        anchor: new google.maps.Point(0, 30)
@@ -153,6 +153,11 @@ function initialize() {
     }
 
 }
+
+google.load('maps', '3', {
+  other_params: 'key=AIzaSyC0xQ57bjRAv9JpC-u14Ps0DwG7EDFJAzU',
+  callback: initialize
+});
 
 $(function() {
     $('#save').on('click', function() {
