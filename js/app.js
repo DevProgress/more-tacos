@@ -62,6 +62,10 @@ var CONFIG = {
         }
       ]
     },
+    // ELement selector for the inital tooltip save prompt.
+    initialMessage: '#initial-content',
+    // ELement selector for the save prompt after initial drag.
+    savePrompt: '#save-content',
     // format values for marker icons
     clusterCalculator: function(markers, numStyles) {
       var count = markers.length;
@@ -76,8 +80,6 @@ var CONFIG = {
 
     // Element selector for save confirmation message.
     saveConfirmation: '#info-content',
-    // tooltip for what to do; shown on initial map draw
-    tooltip: '#tooltip',
     // Element selector for save error message.
     saveError: '#error-content',
     // Default initial map zoom level.
@@ -115,7 +117,6 @@ var TacoMap = function(mapEl, database, initialPosition, initialZoom) {
 
   /** @private {google.maps.InfoWindow} Pop-up window for the map. */
   this._iw = new google.maps.InfoWindow();
-  this._tooltip = new google.maps.InfoWindow();
 
   /** @private {google.maps.Marker} The user's draggable marker. */
   this._userMarker = new google.maps.Marker({
@@ -158,14 +159,14 @@ TacoMap.prototype._init = function() {
     return this;
   }
 
-    // Display the donation/share CTA.
-  this._tooltip.setContent($(CONFIG.TACO_MAP.tooltip).html());
-  this._tooltip.open(this._map, this._userMarker);
-  var tooltip = this._tooltip;
-  window.setTimeout(function() {
-      tooltip.close();
-  }, 10000);
+  this._iw.setContent($(CONFIG.TACO_MAP.initialMessage).html());
+  this._iw.open(this._map, this._userMarker);
 
+  google.maps.event.addListenerOnce(this._userMarker, 'dragend', function() {
+    this._iw.setContent($(CONFIG.TACO_MAP.savePrompt).html());
+  }.bind(this));
+
+    // Display the donation/share CTA.
   this._db.ref('trucks').on('child_added', function(data) {
     this.addMarker({
       lat: data.val().lat,
@@ -287,6 +288,10 @@ TacoMap.prototype.saveMarker = function() {
     this._iw.setContent($(CONFIG.TACO_MAP.saveConfirmation).html());
     this._iw.open(this._map, this._userMarker);
 
+    google.maps.event.addListenerOnce(this._userMarker, 'dragend', function() {
+      this._iw.setContent($(CONFIG.TACO_MAP.savePrompt).html());
+    }.bind(this));
+
     // Reset the map busy state and trigger a success event.
     this._map._isBusy = false;
     $(this._map).trigger('saveSuccess');
@@ -295,6 +300,11 @@ TacoMap.prototype.saveMarker = function() {
     this._userMarker.setAnimation(null);
     this._iw.setContent($(CONFIG.TACO_MAP.saveError).html());
     this._iw.open(this._map, this._userMarker);
+
+    google.maps.event.addListenerOnce(this._userMarker, 'dragend', function() {
+      this._iw.setContent($(CONFIG.TACO_MAP.savePrompt).html());
+    }.bind(this));
+
     this._map._isBusy = false;
     $(this._map).trigger('saveError');
   }.bind(this));
@@ -374,7 +384,7 @@ function initialize() {
     });
   }
 
-  $('#save').on('click', function() {
+  $('body').on('click', '.btn-save', function() {
     if (tacoMap.isBusy()) {
       return;
     }
