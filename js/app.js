@@ -202,13 +202,19 @@ TacoMap.prototype._init = function() {
  * @return {this} TacoMap
  */
 TacoMap.prototype._updateHash = function() {
+
   if (!'replaceState' in history) {
     return this;
   }
+
+  $(this._map).trigger('updatedHash');
+
   var newPos = this.getUserPosition();
   history.replaceState(null, null, '#' + newPos.lat + '_' + newPos.lng + '_' +
       this._map.getZoom());
+
   return this;
+
 };
 
 /**
@@ -349,7 +355,7 @@ TacoMap.prototype.getShareLinks = function() {
     var url = window.location.href;
 
     return {
-        twitter: 'http://twitter.com/intent/tweet?url='+ url,
+        twitter: 'http://twitter.com/intent/tweet?url='+ url + '&text=I%20just%20sponsored%20a%20virtual%20taco%20truck.%20You%20can,%20too.%20Save%20The%20Tacos.&hashtags=SaveTheTacos',
         facebook: 'http://facebook.com/sharer/sharer.php?u='+ url
     }
 
@@ -364,8 +370,7 @@ TacoMap.prototype.getShareLinks = function() {
 
 TacoMap.prototype.getInfoWindowHTML = function() {
 
-    var shares = TacoMap.prototype.getShareLinks();
-
+    var shares = this.getShareLinks();
 
     var html = '<p>Tell your friend: ‘Hey! I just put a (virtual) taco truck on the map for you. Hopefully, when the taco truck invasion happens, they’ll put a real taco truck there!</p>';
     html += '<p><a href="https://www.hillaryclinton.com/donate/?amount=3.00&utm_source=tacotruckparty" target="donate" class="btn btn-primary info-donate">Donate $3 to Hillary</a></p>';
@@ -482,6 +487,18 @@ function initialize() {
   $('.donate').on('click', function() {
     tacoMap.logAction('donate');
   });
+
+
+  /**
+   * Set the initial share links and watch for changes to the hash
+ */
+
+  createShareLinks(tacoMap);
+
+  $(tacoMap._map).on('updatedHash', function(event) {
+     createShareLinks(tacoMap);
+  });
+
 }
 
 /**
@@ -498,3 +515,21 @@ google.load('maps', '3', {
 });
 
 })(window, jQuery, google);
+
+
+
+// helpers
+
+/**
+ * Updates the share links (on top of the map)
+ * @param {Object} passes the taco object for access to API
+ **/
+
+function createShareLinks(tacoMap) {
+
+    var shares = tacoMap.getShareLinks();
+
+    $('.js-share-twitter').attr('href', shares.twitter);
+    $('.js-share-facebook').attr('href', shares.facebook);
+
+}
