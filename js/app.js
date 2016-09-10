@@ -27,62 +27,57 @@ var CONFIG = {
     staticMarker: {
       anchor: {
         x: 0,
-        y: 30
+        y: 0
       },
       origin: {
         x: 0,
         y: 0
       },
       height: 60,
-      width: 60,
-      url: '/images/taco_truck.png',
+      width: 42,
+      url: 'images/marker_truck_white.png',
     },
     // Active taco truck icon settings.
     userMarker: {
       anchor: {
         x: 0,
-        y: 30
+        y: 0
       },
       origin: {
         x: 0,
         y: 0
       },
       height: 60,
-      width: 60,
-      url: '/images/taco_truck_active.png',
+      width: 42,
+      url: 'images/marker_truck_blue.png',
     },
     // MarkerCluster options.
     mcOptions: {
       styles: [
         {
-          height: 52,
-          width: 53,
-          url: '/images/m1.png'
-        },
-        {
-          height: 56,
-          width: 55,
-          url: '/images/m2.png'
-        },
-        {
-          height: 66,
-          width: 65,
-          url: '/images/m3.png'
-        },
-        {
-          height: 78,
-          width: 77,
-          url: '/images/m4.png'
-        },
-        {
-          height: 90,
-          width: 89,
-          url: '/images/m5.png'
+          height: 40,
+          width: 60,
+          url: 'images/marker_truck_plain.png',
+          anchor: [-5, -5]
         }
       ]
     },
+    // format values for marker icons
+    clusterCalculator: function(markers, numStyles) {
+      var count = markers.length;
+      if (count > 1000) {
+        count = parseInt(count/100)/10+'k';
+      }
+      return {
+        text: '&nbsp;&nbsp;&nbsp;'+count,
+        index: 0
+      };
+    },
+
     // Element selector for save confirmation message.
     saveConfirmation: '#info-content',
+    // tooltip for what to do; shown on initial map draw
+    tooltip: '#tooltip',
     // Element selector for save error message.
     saveError: '#error-content',
     // Default initial map zoom level.
@@ -116,9 +111,11 @@ var TacoMap = function(mapEl, database, initialPosition, initialZoom) {
 
   /** @private {MarkerClusterer} Pin clustering object. */
   this._mc = new window.MarkerClusterer(this._map, [], CONFIG.TACO_MAP.mcOptions);
+  this._mc.setCalculator(CONFIG.TACO_MAP.clusterCalculator);
 
   /** @private {google.maps.InfoWindow} Pop-up window for the map. */
   this._iw = new google.maps.InfoWindow();
+  this._tooltip = new google.maps.InfoWindow();
 
   /** @private {google.maps.Marker} The user's draggable marker. */
   this._userMarker = new google.maps.Marker({
@@ -160,6 +157,14 @@ TacoMap.prototype._init = function() {
   if (this.isInitialized) {
     return this;
   }
+
+    // Display the donation/share CTA.
+  this._tooltip.setContent($(CONFIG.TACO_MAP.tooltip).html());
+  this._tooltip.open(this._map, this._userMarker);
+  var tooltip = this._tooltip;
+  window.setTimeout(function() {
+      tooltip.close();
+  }, 10000);
 
   this._db.ref('trucks').on('child_added', function(data) {
     this.addMarker({
@@ -333,7 +338,6 @@ TacoMap.isValidCoord = function(coord) {
   var lng = coord.lng;
   return (lat >= 0 && lat < 90 && lng >= -180 && lng <= 180);
 };
-
 
 /**
  * Initialization callback to kick things off once Google maps have loaded.
