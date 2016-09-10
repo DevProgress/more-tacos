@@ -187,7 +187,12 @@ $(function() {
         activeMarker.setAnimation(google.maps.Animation.BOUNCE);
         window.setTimeout(function() {
             activeMarker.setAnimation(null);
-            addMarker(new google.maps.LatLng(lat - 0.01, lng), true);
+            // Should always have a map by this point, but just in case....
+            if (map) {
+                zoomLevel = map.getZoom();
+                offset = Math.pow(2, 3-zoomLevel);
+                addMarker(new google.maps.LatLng(lat - offset, lng - offset), true);
+            }
         }, 500);
 
 
