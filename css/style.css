@@ -36,6 +36,11 @@ h1 {
     color: #fff;
 }
 
+.donate .btn-primary {
+    background-color: #254da3;
+    border-color: #254da3;
+}
+
 .btn-primary a {
     color: #fff;
 }
@@ -62,9 +67,28 @@ h1 {
     position: absolute;
     z-index: 100;
     top: 10px;
+    left: 200px;
 }
 
 #social div {
     display: inline-block;
-    margin-left: 10px;
+    margin-left: 5px;
+    height: 28px;
+}
+
+#social .donate .btn {
+    height: 28px;
+    vertical-align: bottom;
+}
+
+#social .twitter {
+    vertical-align: bottom;
+}
+
+.twitter iframe {
+    height: 28px !important;
+}
+
+.map-row {
+    position: relative;
 }

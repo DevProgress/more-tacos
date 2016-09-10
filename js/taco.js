@@ -121,8 +121,10 @@ function setupMap(mapOptions) {
     // position buttons
     var mapWidth = $('#map').width();
     var saveWidth = $('#save-button').width();
-    $('#save-button').css({left: parseInt(mapWidth/2 - saveWidth/2)+'px'});
-    $('#social').css({left: (mapWidth-160)+'px'});
+    google.maps.event.addListenerOnce(map, 'idle', function() {
+        $('#save-button').css({top: '10px', left: parseInt(mapWidth/2 - saveWidth/2)+'px'});
+        $('#social').css({top: '10px', left: (mapWidth-200)+'px'});
+    });
 }
 
 function initialize() {
@@ -130,13 +132,13 @@ function initialize() {
        url: 'taco_truck_active.png',
        size: new google.maps.Size(60, 60),
        origin: new google.maps.Point(0, 0),
-       anchor: new google.maps.Point(0, 30)
+       anchor: new google.maps.Point(30, 30)
     };
     image = {
        url: 'taco_truck.png',
        size: new google.maps.Size(60, 60),
        origin: new google.maps.Point(0, 0),
-       anchor: new google.maps.Point(0, 30)
+       anchor: new google.maps.Point(0, 0)
     };
 
     var mapOptions = {
