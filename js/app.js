@@ -81,8 +81,10 @@ var CONFIG = {
         }
       ]
     },
-    // Element selector for confirmation message.
+    // Element selector for save confirmation message.
     saveConfirmation: '#info-content',
+    // Element selector for save error message.
+    saveError: '#error-content',
     // Default initial map zoom level.
     initialZoom: 15
   }
@@ -91,11 +93,12 @@ var CONFIG = {
 /**
  * @constructor
  * @param {HTMLElement} mapEl - HTML element containing the map.
- * @param {Firebase} databaseRef - Firebase reference to the marker DB.
+ * @param {Firebase} database - Firebase reference to the marker DB.
  * @param {?Object} initalPosition - Optional lat, lng coordinates to set
  *   maps initial center.
  * @param {number} initialPosition.lat - Initial latitude.
  * @param {number} initialPosition.lng - Initial longitude.
+ * @param {number} initialZoom - Optional zoom value to set on the map.
  */
 var TacoMap = function(mapEl, database, initialPosition, initialZoom) {
   /** @private {Object} Initial map center coordinates. */
@@ -262,11 +265,33 @@ TacoMap.prototype.saveMarker = function() {
   var key = this._db.ref().child('trucks').push().key;
   var update = {};
   update['/trucks/' + key] = this.getUserPosition();
+  this._map._isBusy = true;
   this._db.ref().update(update).then(function() {
+    // Success handler when the save is complete.
+    var offset = Math.pow(2, 3 - this._map.getZoom());
+    var position = this.getUserPosition();
+
+    // Offset the marker so it doesn't overlap the new marker.
     this._userMarker.setAnimation(null);
-    $(this._map).trigger('saveSuccess');
+    this._userMarker.setPosition({
+      lat: position.lat - offset,
+      lng: position.lng - offset
+    });
+
+    // Display the donation/share CTA.
     this._iw.setContent($(CONFIG.TACO_MAP.saveConfirmation).html());
     this._iw.open(this._map, this._userMarker);
+
+    // Reset the map busy state and trigger a success event.
+    this._map._isBusy = false;
+    $(this._map).trigger('saveSuccess');
+  }.bind(this), function() {
+    // Error handler in case the save promise is rejected.
+    this._userMarker.setAnimation(null);
+    this._iw.setContent($(CONFIG.TACO_MAP.saveError).html());
+    this._iw.open(this._map, this._userMarker);
+    this._map._isBusy = false;
+    $(this._map).trigger('saveError');
   }.bind(this));
 
   return this;
