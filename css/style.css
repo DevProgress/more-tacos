@@ -57,6 +57,14 @@ h1 {
     display: none;
 }
 
+.gm-style-iw {
+    text-align: center;
+}
+
+.gm-style-iw + div {
+    display: none;
+}
+
 #save-button {
     position: absolute;
     z-index: 100;
@@ -68,7 +76,8 @@ h1 {
     position: absolute;
     z-index: 100;
     top: 10px;
-    left: 200px;
+    right: 10px;
+    text-align: right;
 }
 
 #social div {

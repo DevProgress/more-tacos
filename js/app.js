@@ -81,6 +81,10 @@ var CONFIG = {
         }
       ]
     },
+    // ELement selector for the inital tooltip save prompt.
+    initialMessage: '#initial-content',
+    // ELement selector for the save prompt after initial drag.
+    savePrompt: '#save-content',
     // Element selector for save confirmation message.
     saveConfirmation: '#info-content',
     // Element selector for save error message.
@@ -160,6 +164,13 @@ TacoMap.prototype._init = function() {
   if (this.isInitialized) {
     return this;
   }
+
+  this._iw.setContent($(CONFIG.TACO_MAP.initialMessage).html());
+  this._iw.open(this._map, this._userMarker);
+
+  google.maps.event.addListenerOnce(this._userMarker, 'dragend', function() {
+    this._iw.setContent($(CONFIG.TACO_MAP.savePrompt).html());
+  }.bind(this));
 
   this._db.ref('trucks').on('child_added', function(data) {
     this.addMarker({
@@ -282,6 +293,10 @@ TacoMap.prototype.saveMarker = function() {
     this._iw.setContent($(CONFIG.TACO_MAP.saveConfirmation).html());
     this._iw.open(this._map, this._userMarker);
 
+    google.maps.event.addListenerOnce(this._userMarker, 'dragend', function() {
+      this._iw.setContent($(CONFIG.TACO_MAP.savePrompt).html());
+    }.bind(this));
+
     // Reset the map busy state and trigger a success event.
     this._map._isBusy = false;
     $(this._map).trigger('saveSuccess');
@@ -290,6 +305,11 @@ TacoMap.prototype.saveMarker = function() {
     this._userMarker.setAnimation(null);
     this._iw.setContent($(CONFIG.TACO_MAP.saveError).html());
     this._iw.open(this._map, this._userMarker);
+
+    google.maps.event.addListenerOnce(this._userMarker, 'dragend', function() {
+      this._iw.setContent($(CONFIG.TACO_MAP.savePrompt).html());
+    }.bind(this));
+
     this._map._isBusy = false;
     $(this._map).trigger('saveError');
   }.bind(this));
@@ -370,7 +390,7 @@ function initialize() {
     });
   }
 
-  $('#save').on('click', function() {
+  $('body').on('click', '.btn-save', function() {
     if (tacoMap.isBusy()) {
       return;
     }
