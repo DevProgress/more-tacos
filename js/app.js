@@ -137,9 +137,9 @@ var TacoMap = function(mapEl, database, initialPosition, initialZoom) {
   });
 
   if (initialPosition) {
-      this._iw.setContent($(CONFIG.TACO_MAP.initialMessageWithPos).html());
+    this._iw.setContent($(CONFIG.TACO_MAP.initialMessageWithPos).html());
   } else {
-      this._iw.setContent($(CONFIG.TACO_MAP.initialMessage).html());
+    this._iw.setContent($(CONFIG.TACO_MAP.initialMessage).html());
   }
 
   /** @private {boolean} Whether or not this has been initialized. */
