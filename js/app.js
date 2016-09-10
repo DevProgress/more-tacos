@@ -331,6 +331,25 @@ TacoMap.prototype.saveMarker = function() {
 
 
 /**
+ * Creates & maintains the share urls for the app
+ * @method
+ * @return {Object} twitter, facebook urls
+ */
+
+TacoMap.prototype.getShareLinks = function() {
+
+    // pulls from the updated url
+    var url = window.location.href;
+
+    return {
+        twitter: 'http://twitter.com/intent/tweet?url='+ url,
+        facebook: 'http://facebook.com/sharer/sharer.php?u='+ url
+    }
+
+}
+
+
+/**
  * Creates the info window content so we can dynamically set the share url.
  * @method
  * @return {HTML} Returns window html
@@ -338,11 +357,12 @@ TacoMap.prototype.saveMarker = function() {
 
 TacoMap.prototype.getInfoWindowHTML = function() {
 
-    var url = window.location.href;
+    var shares = TacoMap.prototype.getShareLinks();
+
 
     var html = '<p>Tell your friend: ‘Hey! I just put a (virtual) taco truck on the map for you. Hopefully, when the taco truck invasion happens, they’ll put a real taco truck there!</p>';
     html += '<p><a href="https://www.hillaryclinton.com/donate/?amount=3.00&utm_source=tacotruckparty" target="donate" class="btn btn-primary info-donate">Donate $3 to Hillary</a></p>';
-    html += '<div>Share: <a href="http://twitter.com/intent/tweet?url='+ url +'" class="info-box-tweet">Tweet</a><a href="http://facebook.com/sharer/sharer.php?u='+ url +'">Share</a></div>';
+    html += '<div>Share: <a href="' + shares.twitter + '" class="btn btn-secondary btn-tweet">Tweet</a><a href="'+ shares.facebook +'" class="btn btn-secondary btn-share">Share</a></div>';
 
     return html;
 };
