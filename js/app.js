@@ -285,7 +285,8 @@ TacoMap.prototype.saveMarker = function() {
     });
 
     // Display the donation/share CTA.
-    this._iw.setContent($(CONFIG.TACO_MAP.saveConfirmation).html());
+    //this._iw.setContent($(CONFIG.TACO_MAP.saveConfirmation).html());
+    this._iw.setContent(this.getInfoWindowHTML());
     this._iw.open(this._map, this._userMarker);
 
     google.maps.event.addListenerOnce(this._userMarker, 'dragend', function() {
@@ -311,6 +312,36 @@ TacoMap.prototype.saveMarker = function() {
 
   return this;
 };
+
+
+/**
+ * Creates the shareable url
+ * @method
+ * @return {HTML} Returns the full url
+ */
+
+TacoMap.prototype.createLocationUrl = function() {
+    var position = this.getUserPosition();
+    return window.location.origin + '/#' + position.lat + '_' + position.lng;
+}
+
+
+/**
+ * Creates the info window content so we can dynamically set the share url.
+ * @method
+ * @return {HTML} Returns window html
+ */
+
+TacoMap.prototype.getInfoWindowHTML = function() {
+
+    var url = this.createLocationUrl();
+
+    var html = '<p>Tell your friend: ‘Hey! I just put a (virtual) taco truck on the map for you. Hopefully, when the taco truck invasion happens, they’ll put a real taco truck there!</p>';
+    html += '<p><a href="https://www.hillaryclinton.com/donate/?amount=3.00&utm_source=tacotruckify" target="donate" class="btn btn-primary">Donate $3 to Hillary</a></p>';
+    html += '<div>Share: <a href="http://twitter.com/intent/tweet?url='+ url +'" class="info-box-tweet">Tweet</a><a href="http://facebook.com/sharer/sharer.php?u='+ url +'">Share</a></div>'
+
+    return html;
+}
 
 /**
  * Moves the center of the map to the provided coordinate and places the
