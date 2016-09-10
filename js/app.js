@@ -176,17 +176,21 @@ TacoMap.prototype._init = function() {
     });
   }.bind(this));
 
-  if ('replaceState' in history) {
+  google.maps.event.addListener(this._userMarker, 'dragend', function() {
     this._updateHash();
-    google.maps.event.addListener(this._userMarker, 'dragend', function() {
-      this._updateHash();
-      this._map.panTo(this.getUserPosition());
-    }.bind(this));
+    this._map.panTo(this.getUserPosition());
+  }.bind(this));
 
-    this._map.addListener('zoom_changed', function() {
-      this._updateHash();
-    }.bind(this))
-  }
+  this._map.addListener('center_changed', debounce(function() {
+    this._userMarker.setPosition(this._map.getCenter());
+    this._updateHash();
+  }.bind(this), 100));
+
+  this._map.addListener('zoom_changed', function() {
+    this._updateHash();
+  }.bind(this))
+
+  this._updateHash();
 
   return this;
 };
@@ -198,6 +202,9 @@ TacoMap.prototype._init = function() {
  * @return {this} TacoMap
  */
 TacoMap.prototype._updateHash = function() {
+  if (!'replaceState' in history) {
+    return this;
+  }
   var newPos = this.getUserPosition();
   history.replaceState(null, null, '#' + newPos.lat + '_' + newPos.lng + '_' +
       this._map.getZoom());
@@ -396,12 +403,38 @@ TacoMap.prototype.isBusy = function() {
  * @param {Object} coord - Coordinate object.
  * @param {Object} coord.lat - Coordinate object's latitude.
  * @param {Object} coord.lng - Coordinate object's latitude.
-  * @return {boolean}
+ * @return {boolean}
  */
 TacoMap.isValidCoord = function(coord) {
   var lat = coord.lat;
   var lng = coord.lng;
   return (lat >= 0 && lat < 90 && lng >= -180 && lng <= 180);
+};
+
+/**
+ * Returns a function, that, as long as it continues to be invoked, will not
+ * be triggered. The function will be called after it stops being called for
+ * N milliseconds. If `immediate` is passed, trigger the function on the
+ * leading edge, instead of the trailing.
+ * @param {function} func - Function to debounce.
+ * @param {number} wait - Debounce interval.
+ * @param {boolean} immediate - Whether to trigger the function on the leading
+ *   or trailing edge.
+ * @return {function}
+ */
+function debounce(func, wait, immediate) {
+	var timeout;
+	return function() {
+		var context = this, args = arguments;
+		var later = function() {
+			timeout = null;
+			if (!immediate) func.apply(context, args);
+		};
+		var callNow = immediate && !timeout;
+		clearTimeout(timeout);
+		timeout = setTimeout(later, wait);
+		if (callNow) func.apply(context, args);
+	};
 };
 
 /**
