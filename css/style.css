@@ -60,7 +60,8 @@ h1 {
 #save-button {
     position: absolute;
     z-index: 100;
-    top: 10px;
+    top: 5px;
+    left: 20px;
 }
 
 #social {
@@ -71,22 +72,8 @@ h1 {
 }
 
 #social div {
-    display: inline-block;
-    margin-left: 5px;
-    height: 28px;
-}
-
-#social .donate .btn {
-    height: 28px;
-    vertical-align: bottom;
-}
-
-#social .twitter {
-    vertical-align: bottom;
-}
-
-.twitter iframe {
-    height: 28px !important;
+    margin-right: 15px;
+    margin-bottom: 5px;
 }
 
 .map-row {

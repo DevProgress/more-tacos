@@ -90,8 +90,6 @@ function addMarker(coord, isActive) {
 // setup the map
 
 function setupMap(mapOptions) {
-
-
     // create map object
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
@@ -121,9 +119,9 @@ function setupMap(mapOptions) {
     // position buttons
     var mapWidth = $('#map').width();
     var saveWidth = $('#save-button').width();
+    //$('#save-button').css({top: '10px', left: parseInt(mapWidth/2 - saveWidth/2)+'px'});
+    $('#social').css({top: '10px', left: (mapWidth-50)+'px'});
     google.maps.event.addListenerOnce(map, 'idle', function() {
-        $('#save-button').css({top: '10px', left: parseInt(mapWidth/2 - saveWidth/2)+'px'});
-        $('#social').css({top: '10px', left: (mapWidth-200)+'px'});
     });
 }
 
@@ -142,8 +140,9 @@ function initialize() {
     };
 
     var mapOptions = {
-      zoom: 15,
-      center: new google.maps.LatLng(38.897885, -77.036508)
+        zoom: 15,
+        center: new google.maps.LatLng(38.897885, -77.036508),
+        mapTypeControl: false
     };
 
     if (location.hash) {
