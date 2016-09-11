@@ -119,7 +119,7 @@ var TacoMap = function(mapEl, database, initialPosition, initialZoom) {
   this._mc.setCalculator(CONFIG.TACO_MAP.clusterCalculator);
 
   /** @private {google.maps.InfoWindow} Pop-up window for the map. */
-  this._iw = new google.maps.InfoWindow();
+  this._iw = new google.maps.InfoWindow({maxWidth: 200});
 
   /** @private {google.maps.Marker} The user's draggable marker. */
   this._userMarker = new google.maps.Marker({
@@ -397,15 +397,22 @@ function initialize() {
 
   if (location.hash) {
     var coords = location.hash.replace('#', '').split('_');
-    var coord = {
-      lat: parseFloat(coords[0]),
-      lng: parseFloat(coords[1])
-    };
-    if (TacoMap.isValidCoord(coord)) {
-      initialPos = coord;
-    }
-    if (coords[2] && isFinite(coords[2])) {
-      initialZoom = parseInt(coords[2], 10);
+    try {
+      var coord = {
+        lat: parseFloat(coords[0]),
+        lng: parseFloat(coords[1])
+      };
+      if (TacoMap.isValidCoord(coord)) {
+        initialPos = coord;
+      }
+    } catch (e) {}
+    if (coords[2]) {
+      try {
+        var zoom = parseInt(coords[2], 10);
+        if (zoom >= 0 && zoom <= 18) {
+          initialZoom = zoom;
+        }
+      } catch (e) {}
     }
   }
 
