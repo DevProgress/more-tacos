@@ -92,15 +92,18 @@ table.metrics {
 /* Share Links */
 
 .btn-tweet{
-    background: #3b5998;
-    color: #fff;
-}
-
-.btn-share{
     background: #00aced;
     color: #fff;
 }
 
+.btn-share{
+    background: #3b5998;
+    color: #fff;
+}
+
+.fa-twitter, .fa-facebook-official {
+    color: #fff;
+}
 
 /* hides X for info windows */
 
