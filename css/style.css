@@ -96,6 +96,11 @@ table.metrics {
     color: #fff;
 }
 
+.btn-tweet:active, .btn-share:active, .btn-tweet:hover, .btn-share:hover, .btn-tweet:visited, .btn-share:visited
+ {
+    color: #fff;
+}
+
 .btn-share{
     background: #3b5998;
     color: #fff;
