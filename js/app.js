@@ -34,7 +34,7 @@ var CONFIG = {
         y: 0
       },
       height: 60,
-      width: 42,
+      width: 35,
       url: 'images/marker_truck_white.png',
     },
     // Active taco truck icon settings.
@@ -55,7 +55,7 @@ var CONFIG = {
     mcOptions: {
       styles: [
         {
-          height: 40,
+          height: 35,
           width: 60,
           url: 'images/marker_truck_plain.png'
         }
