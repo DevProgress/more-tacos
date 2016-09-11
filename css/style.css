@@ -113,3 +113,9 @@ table.metrics {
 /* hides X for info windows */
 
 .gm-style-iw + div{display: none !important;}
+
+.cluster div {
+    text-align: right !important;
+    padding-right: 12px;
+    margin-top: -7px;
+}

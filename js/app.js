@@ -57,8 +57,7 @@ var CONFIG = {
         {
           height: 40,
           width: 60,
-          url: 'images/marker_truck_plain.png',
-          anchor: [-5, -5]
+          url: 'images/marker_truck_plain.png'
         }
       ]
     },
@@ -74,7 +73,7 @@ var CONFIG = {
         count = parseInt(count/100)/10+'k';
       }
       return {
-        text: '&nbsp;&nbsp;&nbsp;'+count,
+        text: count,
         index: 0
       };
     },
