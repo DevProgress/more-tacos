@@ -13,10 +13,10 @@ firebase.database().ref('logs/donate').once('value', function(snapshot) {
     $('#donate-count').text(snapshot.numChildren().toLocaleString());
 });
 
-firebase.database().ref('logs/facebook').once('value', function(snapshot) {
+firebase.database().ref('logs/share').once('value', function(snapshot) {
     $('#facebook-count').text(snapshot.numChildren().toLocaleString());
 });
 
-firebase.database().ref('logs/twitter').once('value', function(snapshot) {
+firebase.database().ref('logs/tweet').once('value', function(snapshot) {
     $('#twitter-count').text(snapshot.numChildren().toLocaleString());
 });
