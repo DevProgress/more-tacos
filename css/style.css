@@ -68,7 +68,13 @@ h1 {
     position: absolute;
     z-index: 100;
     top: 10px;
-    left: 200px;
+    left: 400px;
+}
+
+@media all and (max-width: 720px) {
+    #social {
+        left: 170px;
+    }
 }
 
 #social div {

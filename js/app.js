@@ -496,7 +496,6 @@ function initialize() {
     tacoMap.logAction($(this).attr('data-action'));
   });
 
-
   /**
    * Set the initial share links and watch for changes to the hash
  */
@@ -547,7 +546,7 @@ function createShareLinks(tacoMap) {
 
     $('.js-share-twitter').attr('href', shares.twitter);
     $('.js-share-facebook').attr('href', shares.facebook);
-
+    $('#social').css('left', ($('#map').width()-190)+'px');
 }
 
 /**
