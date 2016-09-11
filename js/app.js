@@ -84,7 +84,7 @@ var CONFIG = {
     // Element selector for save error message.
     saveError: '#error-content',
     // Default initial map zoom level.
-    initialZoom: 15
+    initialZoom: 15,
   }
 };
 
@@ -109,7 +109,9 @@ var TacoMap = function(mapEl, database, initialPosition, initialZoom) {
   this._map = new google.maps.Map(mapEl, {
     center: new google.maps.LatLng(this._initialPosition.lat,
         this._initialPosition.lng),
-    zoom: initialZoom || CONFIG.TACO_MAP.initialZoom
+    zoom: initialZoom || CONFIG.TACO_MAP.initialZoom,
+    mapTypeControl: false,
+    streetViewControl: false
   });
 
   /** @private {MarkerClusterer} Pin clustering object. */
