@@ -100,3 +100,8 @@ table.metrics {
     background: #00aced;
     color: #fff;
 }
+
+
+/* hides X for info windows */
+
+.gm-style-iw + div{display: none !important;}
