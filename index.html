@@ -25,6 +25,7 @@ x///////////////////////x   http://DevProgress.us
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="icon" type="image/png" href="images/favicon.png" />
   <title>TacoTruck.Party | Get a virtual taco truck</title>
   <meta property="og:site_name" content="DevProgress"/>
   <meta property="og:title" content="Virtual taco truck"/>
@@ -33,7 +34,7 @@ x///////////////////////x   http://DevProgress.us
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css" />
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
   <link rel="stylesheet" href="css/style.css" />
-  <meta property="og:url" content="http://tacotruck.party" />
+  <meta property="og:url" content="http://tacotruckify.com" />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Virtual taco truck" />
   <meta property="og:description" content="Working toward a taco truck on every corner." />
@@ -55,13 +56,15 @@ x///////////////////////x   http://DevProgress.us
     <!-- positioned over map -->
     <div id="social">
       <div class="donate">
-        <a class="btn btn-primary btn-xs" href="https://www.hillaryclinton.com/donate/?amount=3.00&utm_source=tacotruckify" target="donate">
+        <a class="btn btn-primary btn-xs" href="https://www.hillaryclinton.com/donate/?amount=3.00&utm_source=tacotruckparty" target="donate">
           Donate
         </a>
-      </div>
-      <div class="fb-share-button" data-href="http://tacotruck.party" data-layout="button" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Ftacotruck.party&amp;src=sdkpreparse">Share</a></div>
-      <div class="twitter">
-        <a href="https://twitter.com/share" class="twitter-share-button" data-size="1" data-text="I just sponsored a virtual taco truck. You can too!" data-url="http://tacotruck.party" data-hashtags="SaveTheTacos" data-show-count="false">Tweet</a>
+        <a class="btn btn-secondary btn-tweet btn-xs js-share-twitter" href="#" target="donate">
+          Tweet
+        </a>
+        <a class="btn btn-secondary btn-share btn-xs js-share-facebook" href="#" target="donate">
+          Share
+        </a>
       </div>
     </div>
     <div id="map"></div>
@@ -86,16 +89,16 @@ x///////////////////////x   http://DevProgress.us
 
 <!-- Tooltip content -->
 <div id="initial-content" class="info-content">
-  <p>Drag the taco truck, then click Save.<br>Arrastra el camión de tacos, luego haz clic en ‘Save’</p>
+  <p>Drag the taco truck, then click Save.</p>
   <button class="btn btn-primary btn-save">Save</button>
 </div>
 <div id="initial-content-with-initial-pos" class="info-content">
-    <p>Your very own (virtual) taco truck! Make a new truck for a friend: drag the truck, then click 'Save'.<br>Tu propio (virtual) camión de tacos! Haz un nuevo camión para un amigo : arrastra el camión, luego haz clic en 'Save'</p>
+    <p>Your very own (virtual) taco truck! Make a new truck for a friend: drag the truck, then click 'Save'.</p>
   <button class="btn btn-primary btn-save">Save</button>
 </div>
 
 <div id="save-content" class="info-content">
-  <p>Drag the taco truck, then click Save.<br>Arrastra el camión de tacos, luego haz clic en ‘Save’</p>`
+  <p>Drag the taco truck, then click Save.</p>
   <button class="btn btn-primary btn-save">Save</button>
 </div>
 
@@ -104,7 +107,7 @@ x///////////////////////x   http://DevProgress.us
     Something went wrong while trying to save your truck. Try again.
     <br>
     <!-- donate -->
-    <a href="https://www.hillaryclinton.com/donate/?amount=3.00&utm_source=tacotruckify" target="donate" class="btn btn-primary donate">Donate $3 to Hillary</a>
+    <a href="https://www.hillaryclinton.com/donate/?amount=3.00&utm_source=tacotruckparty" target="donate" class="btn btn-primary donate">Donate $3 to Hillary</a>
   </div>
 </div>
 

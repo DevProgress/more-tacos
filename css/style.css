@@ -87,3 +87,21 @@ td.number {
 table.metrics {
     width: 300px;
 }
+
+
+/* Share Links */
+
+.btn-tweet{
+    background: #3b5998;
+    color: #fff;
+}
+
+.btn-share{
+    background: #00aced;
+    color: #fff;
+}
+
+
+/* hides X for info windows */
+
+.gm-style-iw + div{display: none !important;}

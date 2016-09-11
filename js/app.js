@@ -178,17 +178,21 @@ TacoMap.prototype._init = function() {
     });
   }.bind(this));
 
-  if ('replaceState' in history) {
+  google.maps.event.addListener(this._userMarker, 'dragend', function() {
     this._updateHash();
-    google.maps.event.addListener(this._userMarker, 'dragend', function() {
-      this._updateHash();
-      this._map.panTo(this.getUserPosition());
-    }.bind(this));
+    this._map.panTo(this.getUserPosition());
+  }.bind(this));
 
-    this._map.addListener('zoom_changed', function() {
-      this._updateHash();
-    }.bind(this))
-  }
+  this._map.addListener('center_changed', debounce(function() {
+    this._userMarker.setPosition(this._map.getCenter());
+    this._updateHash();
+  }.bind(this), 100));
+
+  this._map.addListener('zoom_changed', function() {
+    this._updateHash();
+  }.bind(this))
+
+  this._updateHash();
 
   return this;
 };
@@ -200,10 +204,19 @@ TacoMap.prototype._init = function() {
  * @return {this} TacoMap
  */
 TacoMap.prototype._updateHash = function() {
+
+  if (!'replaceState' in history) {
+    return this;
+  }
+
+  $(this._map).trigger('updatedHash');
+
   var newPos = this.getUserPosition();
   history.replaceState(null, null, '#' + newPos.lat + '_' + newPos.lng + '_' +
       this._map.getZoom());
+
   return this;
+
 };
 
 /**
@@ -333,6 +346,25 @@ TacoMap.prototype.saveMarker = function() {
 
 
 /**
+ * Creates & maintains the share urls for the app
+ * @method
+ * @return {Object} twitter, facebook urls
+ */
+
+TacoMap.prototype.getShareLinks = function() {
+
+    // pulls from the updated url
+    var url = window.location.href;
+
+    return {
+        twitter: 'http://twitter.com/intent/tweet?url='+ encodeURIComponent(url) + '&text=I%20just%20sponsored%20a%20virtual%20taco%20truck.%20You%20can,%20too.%20Save%20The%20Tacos.&hashtags=SaveTheTacos',
+        facebook: 'http://facebook.com/sharer/sharer.php?u='+ url
+    }
+
+}
+
+
+/**
  * Creates the info window content so we can dynamically set the share url.
  * @method
  * @return {HTML} Returns window html
@@ -340,11 +372,11 @@ TacoMap.prototype.saveMarker = function() {
 
 TacoMap.prototype.getInfoWindowHTML = function() {
 
-    var url = window.location.href;
+    var shares = this.getShareLinks();
 
     var html = '<p>Tell your friend: ‘Hey! I just put a (virtual) taco truck on the map for you. Hopefully, when the taco truck invasion happens, they’ll put a real taco truck there!</p>';
-    html += '<p><a href="https://www.hillaryclinton.com/donate/?amount=3.00&utm_source=tacotruckify" target="donate" class="btn btn-primary info-donate">Donate $3 to Hillary</a></p>';
-    html += '<div>Share: <a href="http://twitter.com/intent/tweet?url='+ url +'" class="info-box-tweet">Tweet</a><a href="http://facebook.com/sharer/sharer.php?u='+ url +'">Share</a></div>';
+    html += '<p><a href="https://www.hillaryclinton.com/donate/?amount=3.00&utm_source=tacotruckparty" target="donate" class="btn btn-primary info-donate">Donate $3 to Hillary</a></p>';
+    html += '<div>Share: <a href="' + shares.twitter + '" class="btn btn-secondary btn-tweet js-share-twitter">Tweet</a><a href="'+ shares.facebook +'" class="btn btn-secondary btn-share js-share-facebook">Share</a></div>';
 
     return html;
 };
@@ -378,12 +410,38 @@ TacoMap.prototype.isBusy = function() {
  * @param {Object} coord - Coordinate object.
  * @param {Object} coord.lat - Coordinate object's latitude.
  * @param {Object} coord.lng - Coordinate object's latitude.
-  * @return {boolean}
+ * @return {boolean}
  */
 TacoMap.isValidCoord = function(coord) {
   var lat = coord.lat;
   var lng = coord.lng;
   return (lat >= 0 && lat < 90 && lng >= -180 && lng <= 180);
+};
+
+/**
+ * Returns a function, that, as long as it continues to be invoked, will not
+ * be triggered. The function will be called after it stops being called for
+ * N milliseconds. If `immediate` is passed, trigger the function on the
+ * leading edge, instead of the trailing.
+ * @param {function} func - Function to debounce.
+ * @param {number} wait - Debounce interval.
+ * @param {boolean} immediate - Whether to trigger the function on the leading
+ *   or trailing edge.
+ * @return {function}
+ */
+function debounce(func, wait, immediate) {
+	var timeout;
+	return function() {
+		var context = this, args = arguments;
+		var later = function() {
+			timeout = null;
+			if (!immediate) func.apply(context, args);
+		};
+		var callNow = immediate && !timeout;
+		clearTimeout(timeout);
+		timeout = setTimeout(later, wait);
+		if (callNow) func.apply(context, args);
+	};
 };
 
 /**
@@ -438,6 +496,26 @@ function initialize() {
   $('.donate').on('click', function() {
     tacoMap.logAction('donate');
   });
+
+
+  /**
+   * Set the initial share links and watch for changes to the hash
+ */
+
+  createShareLinks(tacoMap);
+
+  $(tacoMap._map).on('updatedHash', function(event) {
+     createShareLinks(tacoMap);
+  });
+
+  $('body').on('.js-share-twitter,.js-share-facebook', 'click', function(event) {
+      event.preventDefault();
+
+      var url = $(this).attr('href');
+      handleShareLinks(url, 400,400);
+
+  });
+
 }
 
 /**
@@ -454,3 +532,31 @@ google.load('maps', '3', {
 });
 
 })(window, jQuery, google);
+
+
+
+// helpers
+
+/**
+ * Updates the share links (on top of the map)
+ * @param {Object} passes the taco object for access to API
+ **/
+
+function createShareLinks(tacoMap) {
+
+    var shares = tacoMap.getShareLinks();
+
+    $('.js-share-twitter').attr('href', shares.twitter);
+    $('.js-share-facebook').attr('href', shares.facebook);
+
+}
+
+/**
+ * Creates the popup links for sharing
+ **/
+
+function handleShareLinks(url, winWidth, winHeight) {
+    var winTop = (screen.height / 2) - (winHeight / 2);
+    var winLeft = (screen.width / 2) - (winWidth / 2);
+    window.open(url, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
+}
