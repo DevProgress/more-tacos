@@ -26,7 +26,7 @@ var CONFIG = {
     // Static taco truck icon settings.
     staticMarker: {
       anchor: {
-        x: 0,
+        x: 30,
         y: 0
       },
       origin: {
@@ -40,7 +40,7 @@ var CONFIG = {
     // Active taco truck icon settings.
     userMarker: {
       anchor: {
-        x: 0,
+        x: 30,
         y: 0
       },
       origin: {
@@ -180,6 +180,11 @@ TacoMap.prototype._init = function() {
   google.maps.event.addListener(this._userMarker, 'dragend', function() {
     this._updateHash();
     this._map.panTo(this.getUserPosition());
+  }.bind(this));
+
+  google.maps.event.addListener(this._map, 'click', function(ev) {
+    this._userMarker.setPosition(ev.latLng);
+    this._updateHash();
   }.bind(this));
 
   this._map.addListener('center_changed', debounce(function() {
