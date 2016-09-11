@@ -119,3 +119,7 @@ table.metrics {
     padding-right: 12px;
     margin-top: -7px;
 }
+
+.tooltip-content {
+    text-align: center;
+}
