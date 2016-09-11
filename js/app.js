@@ -119,7 +119,7 @@ var TacoMap = function(mapEl, database, initialPosition, initialZoom) {
   this._mc.setCalculator(CONFIG.TACO_MAP.clusterCalculator);
 
   /** @private {google.maps.InfoWindow} Pop-up window for the map. */
-  this._iw = new google.maps.InfoWindow({maxWidth: 200});
+  this._iw = new google.maps.InfoWindow({maxWidth: 250});
 
   /** @private {google.maps.Marker} The user's draggable marker. */
   this._userMarker = new google.maps.Marker({
