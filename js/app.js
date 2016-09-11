@@ -53,6 +53,7 @@ var CONFIG = {
     },
     // MarkerCluster options.
     mcOptions: {
+      maxZoom: 15,
       styles: [
         {
           height: 35,
@@ -238,17 +239,10 @@ TacoMap.prototype.addMarker = function(coord) {
   }
 
   var marker = new google.maps.Marker({
-    icon: {
-      anchor: new google.maps.Point(CONFIG.TACO_MAP.staticMarker.anchor.x,
-          CONFIG.TACO_MAP.staticMarker.anchor.y),
-      origin: new google.maps.Point(CONFIG.TACO_MAP.staticMarker.origin.x,
-          CONFIG.TACO_MAP.staticMarker.origin.y),
-      size: new google.maps.Size(CONFIG.TACO_MAP.staticMarker.height,
-          CONFIG.TACO_MAP.staticMarker.width),
-      url: CONFIG.TACO_MAP.staticMarker.url
-    },
+    icon: CONFIG.TACO_MAP.staticMarker,
     position: coord,
-    zIndex: 9
+    zIndex: 9,
+    map: this._map
   });
   this._mc.addMarker(marker);
   return this;
