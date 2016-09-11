@@ -355,7 +355,7 @@ TacoMap.prototype.getShareLinks = function() {
     var url = window.location.href;
 
     return {
-        twitter: 'http://twitter.com/intent/tweet?url='+ url + '&text=I%20just%20sponsored%20a%20virtual%20taco%20truck.%20You%20can,%20too.%20Save%20The%20Tacos.&hashtags=SaveTheTacos',
+        twitter: 'http://twitter.com/intent/tweet?url='+ encodeURIComponent(url) + '&text=I%20just%20sponsored%20a%20virtual%20taco%20truck.%20You%20can,%20too.%20Save%20The%20Tacos.&hashtags=SaveTheTacos',
         facebook: 'http://facebook.com/sharer/sharer.php?u='+ url
     }
 
@@ -374,7 +374,7 @@ TacoMap.prototype.getInfoWindowHTML = function() {
 
     var html = '<p>Tell your friend: ‘Hey! I just put a (virtual) taco truck on the map for you. Hopefully, when the taco truck invasion happens, they’ll put a real taco truck there!</p>';
     html += '<p><a href="https://www.hillaryclinton.com/donate/?amount=3.00&utm_source=tacotruckparty" target="donate" class="btn btn-primary info-donate">Donate $3 to Hillary</a></p>';
-    html += '<div>Share: <a href="' + shares.twitter + '" class="btn btn-secondary btn-tweet">Tweet</a><a href="'+ shares.facebook +'" class="btn btn-secondary btn-share">Share</a></div>';
+    html += '<div>Share: <a href="' + shares.twitter + '" class="btn btn-secondary btn-tweet js-share-twitter">Tweet</a><a href="'+ shares.facebook +'" class="btn btn-secondary btn-share js-share-facebook">Share</a></div>';
 
     return html;
 };
@@ -499,6 +499,14 @@ function initialize() {
      createShareLinks(tacoMap);
   });
 
+  $('body').on('.js-share-twitter,.js-share-facebook', 'click', function(event) {
+      event.preventDefault();
+
+      var url = $(this).attr('href');
+      handleShareLinks(url, 400,400);
+
+  });
+
 }
 
 /**
@@ -532,4 +540,14 @@ function createShareLinks(tacoMap) {
     $('.js-share-twitter').attr('href', shares.twitter);
     $('.js-share-facebook').attr('href', shares.facebook);
 
+}
+
+/**
+ * Creates the popup links for sharing
+ **/
+
+function handleShareLinks(url, winWidth, winHeight) {
+    var winTop = (screen.height / 2) - (winHeight / 2);
+    var winLeft = (screen.width / 2) - (winWidth / 2);
+    window.open(url, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
 }
