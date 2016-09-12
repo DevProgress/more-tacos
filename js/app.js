@@ -33,9 +33,10 @@ var CONFIG = {
         x: 0,
         y: 0
       },
+      // Google maps marker creation has these backwards
       height: 60,
-      width: 35,
-      url: 'images/marker_truck_white.png',
+      width: 34,
+      url: 'images/marker_truck_green.png',
     },
     // Active taco truck icon settings.
     userMarker: {
@@ -57,7 +58,7 @@ var CONFIG = {
       maxZoom: 15,
       styles: [
         {
-          height: 35,
+          height: 34,
           width: 60,
           url: 'images/marker_truck_plain.png'
         }
