@@ -53,6 +53,7 @@ var CONFIG = {
     },
     // MarkerCluster options.
     mcOptions: {
+      zoomOnClick: false,
       maxZoom: 15,
       styles: [
         {
