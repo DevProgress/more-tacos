@@ -8,14 +8,8 @@ body {
     border: 10px solid #fff
 }
 
-.header {
-}
-
-.headline {
-}
-
 h1 {
-    font-size: 60px;
+    font-size: 70px;
     margin: 0;
     font-family: 'Chicle';
     color: #F44336;
@@ -137,7 +131,7 @@ table.metrics {
     text-align: center;
 }
 
-@media all and (max-width: 720px) {
+@media all and (max-width: 768px) {
     #social {
         left: 170px;
     }
@@ -145,9 +139,14 @@ table.metrics {
         border: 5px solid #fff
         height: 400px;
     }
+    h1 {
+        font-size: 60px;
+    }
 }
 
-.vertical-align {
-    display: flex;
-    align-items: center;
+@media all and (min-width: 769px) {
+    .vertical-align {
+        display: flex;
+        align-items: center;
+    }
 }
