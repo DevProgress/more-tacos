@@ -9,17 +9,19 @@ body {
 }
 
 .header {
-    margin-bottom: 15px;
+}
+
+.headline {
 }
 
 h1 {
     font-size: 60px;
-    margin-top: 0;
+    margin: 0;
     font-family: 'Chicle';
     color: #F44336;
 }
 
-.headline h4 {
+h4 {
     color: #1A237E;
     font-weight: bold;
 }
@@ -39,7 +41,7 @@ h1 {
 
 
 .btn-primary {
-    background-color: #1496f2;
+    background-color: #1A237E;
     color: #fff;
 }
 
@@ -57,9 +59,9 @@ h1 {
 }
 
 .description {
-    padding-top: 10px;
     font-style: italic;
     font-size: 16px;
+    display: inline-block;
 }
 
 .info-content {
@@ -87,6 +89,7 @@ h1 {
 
 .map-row {
     position: relative;
+    margin-top: 15px;
 }
 
 td.number {
