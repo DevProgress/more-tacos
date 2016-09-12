@@ -8,18 +8,14 @@ body {
     border: 10px solid #fff
 }
 
-.header {
-    margin-bottom: 15px;
-}
-
 h1 {
-    font-size: 60px;
-    margin-top: 0;
+    font-size: 70px;
+    margin: 0;
     font-family: 'Chicle';
     color: #F44336;
 }
 
-.headline h4 {
+h4 {
     color: #1A237E;
     font-weight: bold;
 }
@@ -39,7 +35,7 @@ h1 {
 
 
 .btn-primary {
-    background-color: #1496f2;
+    background-color: #1A237E;
     color: #fff;
 }
 
@@ -57,9 +53,9 @@ h1 {
 }
 
 .description {
-    padding-top: 10px;
     font-style: italic;
     font-size: 16px;
+    display: inline-block;
 }
 
 .info-content {
@@ -87,6 +83,7 @@ h1 {
 
 .map-row {
     position: relative;
+    margin-top: 15px;
 }
 
 td.number {
@@ -127,13 +124,14 @@ table.metrics {
     text-align: right !important;
     padding-right: 15px;
     line-height: 22px !important;
+    font-weight: bold;
 }
 
 .tooltip-content {
     text-align: center;
 }
 
-@media all and (max-width: 720px) {
+@media all and (max-width: 768px) {
     #social {
         left: 170px;
     }
@@ -141,9 +139,14 @@ table.metrics {
         border: 5px solid #fff
         height: 400px;
     }
+    h1 {
+        font-size: 60px;
+    }
 }
 
-.vertical-align {
-    display: flex;
-    align-items: center;
+@media all and (min-width: 769px) {
+    .vertical-align {
+        display: flex;
+        align-items: center;
+    }
 }

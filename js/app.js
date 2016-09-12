@@ -36,7 +36,7 @@ var CONFIG = {
       // Google maps marker creation has these backwards
       height: 60,
       width: 34,
-      url: 'images/marker_truck_green.png',
+      url: 'images/marker_truck_blue.png',
     },
     // Active taco truck icon settings.
     userMarker: {
@@ -49,8 +49,8 @@ var CONFIG = {
         y: 0
       },
       height: 60,
-      width: 42,
-      url: 'images/marker_truck_blue.png',
+      width: 34,
+      url: 'images/marker_truck_dkblue.png',
     },
     // MarkerCluster options.
     mcOptions: {
@@ -60,7 +60,8 @@ var CONFIG = {
         {
           height: 34,
           width: 60,
-          url: 'images/marker_truck_plain.png'
+          url: 'images/marker_truck_blue_plain.png',
+          textColor: '#fff'
         }
       ]
     },
