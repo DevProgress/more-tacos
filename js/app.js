@@ -99,6 +99,101 @@ var CONFIG = {
  * @param {number} initialZoom - Optional zoom value to set on the map.
  */
 var TacoMap = function(mapEl, database, initialPosition, initialZoom) {
+  /**
+    Custom overlay for the active marker
+    This goes on top of the marker cluster custom overlay, so that active
+    marker will be above cluster icons.
+  **/
+  function ActiveMarkerOverlay(marker, map) {
+    this._marker = marker;
+    this._map = map;
+    this._div = null;
+    this.setMap(map);
+  }
+
+  ActiveMarkerOverlay.prototype = new google.maps.OverlayView();
+
+  /**
+   * onAdd is called when the map's panes are ready and the overlay has been
+   * added to the map.
+   */
+  ActiveMarkerOverlay.prototype.onAdd = function() {
+    var div = document.createElement('div');
+    /*
+  width: 60px; height: 42px; overflow: hidden; position: absolute; opacity: 0.01; cursor: pointer; left: 319px; top: 200px; z-index: 10;
+    */
+    div.style.position = 'absolute';
+    div.draggable = true;
+
+    // Create the img element and attach it to the div.
+    /*
+  <img draggable="false" src="images/marker_truck_blue.png" style="position: absolute; left: 0px; top: 0px; -moz-user-select: none; border: 0px none; padding: 0px; margin: 0px; max-width: none; width: 60px; height: 34px;">
+    */
+    var img = document.createElement('img');
+    img.src = this._marker.icon.url;
+    img.style.width = this._marker.width;
+    img.style.height = this._marker.height;
+    img.style.position = 'absolute';
+    img.style['z-index'] = 100;
+    div.appendChild(img);
+
+    this._div = div;
+
+    // Add the element to the overlayMouseTargetLayer pane (same as clusters)
+    var panes = this.getPanes();
+    panes.overlayMouseTarget.appendChild(div);
+
+    google.maps.event.addDomListener(this._map.getDiv(), 'mouseleave', function() {
+      google.maps.event.trigger(div, 'mouseup');
+    });
+
+    var overlay = this;
+    google.maps.event.addDomListener(div, 'mousedown', function(e) {
+      this.style.cursor = 'move';
+      overlay._map.set('draggable', false);
+      overlay._origin = e;
+
+      overlay.moveHandler = google.maps.event.addDomListener(overlay._map.getDiv(), 'mousemove', function(e) {
+        var origin = overlay._origin,
+            left = origin.clientX - e.clientX,
+            top = origin.clientY - e.clientY,
+            projection = overlay.getProjection(),
+            pos = projection.fromLatLngToDivPixel(overlay._marker.getPosition());
+            latLng = projection.fromDivPixelToLatLng(new google.maps.Point(pos.x - left, pos.y - top));
+        overlay._origin = e;
+        overlay._marker.setPosition(latLng);
+        overlay.draw();
+      });
+    });
+
+    google.maps.event.addDomListener(div, 'mouseup', function() {
+      overlay._map.set('draggable', true);
+      this.style.cursor = 'default';
+      google.maps.event.removeListener(overlay.moveHandler);
+    });
+  };
+
+  ActiveMarkerOverlay.prototype.draw = function() {
+      var pos = this.getProjection().fromLatLngToDivPixel(this._marker.getPosition());
+      var icon = this._marker.icon
+      if (typeof icon.anchor === 'object') {
+        pos.x -= icon.anchor.x;
+        pos.y -= icon.anchor.y;
+      } else {
+        pos.x -= parseInt(icon.width / 2, 10);
+        pos.y -= parseInt(icon.height / 2, 10);
+      }
+      this._div.style.top = pos.y + 'px';
+      this._div.style.left = pos.x + 'px';
+  };
+
+  // The onRemove() method will be called automatically from the API if
+  // we ever set the overlay's map property to 'null'.
+  ActiveMarkerOverlay.prototype.onRemove = function() {
+    this._div.parentNode.removeChild(this._div);
+    this._div = null;
+  };
+
   /** @private {Object} Initial map center coordinates. */
   this._initialPosition = initialPosition || CONFIG.TACO_MAP.defaultCenter;
 
@@ -133,10 +228,11 @@ var TacoMap = function(mapEl, database, initialPosition, initialZoom) {
           CONFIG.TACO_MAP.userMarker.width),
       url: CONFIG.TACO_MAP.userMarker.url
     },
-    map: this._map,
     position: this._initialPosition,
-    zIndex: 10
+    zIndex: 100
   });
+  this._activeOverlay = new ActiveMarkerOverlay(this._userMarker, this._map);
+
 
   if (initialPosition) {
     this._iw.setContent($(CONFIG.TACO_MAP.initialMessageWithPos).html());
@@ -529,7 +625,6 @@ google.load('maps', '3', {
 });
 
 })(window, jQuery, google);
-
 
 
 // helpers
