@@ -127,6 +127,7 @@ table.metrics {
     text-align: right !important;
     padding-right: 15px;
     line-height: 22px !important;
+    font-weight: bold;
 }
 
 .tooltip-content {
