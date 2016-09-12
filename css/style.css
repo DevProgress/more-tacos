@@ -58,6 +58,8 @@ h1 {
 
 .description {
     padding-top: 10px;
+    font-style: italic;
+    font-size: 16px;
 }
 
 .info-content {
@@ -139,4 +141,9 @@ table.metrics {
         border: 5px solid #fff
         height: 400px;
     }
+}
+
+.vertical-align {
+    display: flex;
+    align-items: center;
 }
