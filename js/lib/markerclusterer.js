@@ -1068,6 +1068,7 @@ ClusterIcon.prototype.onAdd = function() {
   if (this.visible_) {
     var pos = this.getPosFromLatLng_(this.center_);
     this.div_.style.cssText = this.createCss(pos);
+    this.div_.className = 'cluster-marker';
     this.div_.innerHTML = this.sums_.text;
   }
 
@@ -1143,6 +1144,7 @@ ClusterIcon.prototype.show = function() {
   if (this.div_) {
     var pos = this.getPosFromLatLng_(this.center_);
     this.div_.style.cssText = this.createCss(pos);
+    this.div_.className = 'cluster-marker';
     this.div_.style.display = '';
   }
   this.visible_ = true;

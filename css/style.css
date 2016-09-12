@@ -1,24 +1,23 @@
-html {
-    font-family: "Sans";
+body {
+    background-color: #e2e4f4;
 }
 
 #map {
     width: 100%;
-    height: 400px;
-}
-
-.header {
-    color: #ef2e2a;
+    height: 600px;
+    border: 10px solid #fff
 }
 
 h1 {
-    font-size: 48px;
-    margin-top: 0;
+    font-size: 70px;
+    margin: 0;
+    font-family: 'Chicle';
+    color: #F44336;
 }
 
-.headline h4 {
-    color: #1496f2;
-    font-style: italic;
+h4 {
+    color: #1A237E;
+    font-weight: bold;
 }
 
 .footer {
@@ -31,12 +30,12 @@ h1 {
 }
 
 .attribution {
-    color: #bbb;
+    color: #666;
 }
 
 
 .btn-primary {
-    background-color: #1496f2;
+    background-color: #1A237E;
     color: #fff;
 }
 
@@ -54,7 +53,9 @@ h1 {
 }
 
 .description {
-    padding-top: 10px;
+    font-style: italic;
+    font-size: 16px;
+    display: inline-block;
 }
 
 .info-content {
@@ -75,12 +76,6 @@ h1 {
     left: 400px;
 }
 
-@media all and (max-width: 720px) {
-    #social {
-        left: 170px;
-    }
-}
-
 #social div {
     margin-right: 15px;
     margin-bottom: 5px;
@@ -88,6 +83,7 @@ h1 {
 
 .map-row {
     position: relative;
+    margin-top: 15px;
 }
 
 td.number {
@@ -124,12 +120,33 @@ table.metrics {
 
 .gm-style-iw + div{display: none !important;}
 
-.cluster div {
+.cluster-marker {
     text-align: right !important;
-    padding-right: 12px;
-    margin-top: -7px;
+    padding-right: 15px;
+    line-height: 22px !important;
+    font-weight: bold;
 }
 
 .tooltip-content {
     text-align: center;
+}
+
+@media all and (max-width: 768px) {
+    #social {
+        left: 170px;
+    }
+    #map {
+        border: 5px solid #fff
+        height: 400px;
+    }
+    h1 {
+        font-size: 60px;
+    }
+}
+
+@media all and (min-width: 769px) {
+    .vertical-align {
+        display: flex;
+        align-items: center;
+    }
 }
