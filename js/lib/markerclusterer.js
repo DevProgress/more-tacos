@@ -1072,7 +1072,7 @@ ClusterIcon.prototype.onAdd = function() {
   }
 
   var panes = this.getPanes();
-  panes.overlayMouseTarget.appendChild(this.div_);
+  panes.markerLayer.appendChild(this.div_);
 
   var that = this;
   var isDragging = false;
