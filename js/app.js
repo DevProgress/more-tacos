@@ -112,7 +112,8 @@ var TacoMap = function(mapEl, database, initialPosition, initialZoom) {
         this._initialPosition.lng),
     zoom: initialZoom || CONFIG.TACO_MAP.initialZoom,
     mapTypeControl: false,
-    streetViewControl: false
+    streetViewControl: false,
+    clickableIcons: false
   });
 
   /** @private {MarkerClusterer} Pin clustering object. */
