@@ -121,10 +121,10 @@ table.metrics {
 
 .gm-style-iw + div{display: none !important;}
 
-.cluster div {
+.cluster-marker {
     text-align: right !important;
-    padding-right: 12px;
-    margin-top: -7px;
+    padding-right: 15px;
+    line-height: 22px !important;
 }
 
 .tooltip-content {
