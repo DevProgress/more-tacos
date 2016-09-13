@@ -102,14 +102,18 @@ table.metrics {
     color: #fff;
 }
 
-.btn-tweet:active, .btn-share:active, .btn-tweet:hover, .btn-share:hover, .btn-tweet:visited, .btn-share:visited
+B.btn-tweet:active, .btn-share:active, .btn-tweet:hover, .btn-share:hover, .btn-tweet:visited, .btn-share:visited
  {
     color: #fff;
 }
 
-.btn-share{
+.btn-share {
     background: #3b5998;
     color: #fff;
+}
+
+.popup-share .btn {
+    margin-right: 10px;
 }
 
 .fa-twitter, .fa-facebook-official {
@@ -129,6 +133,10 @@ table.metrics {
 
 .tooltip-content {
     text-align: center;
+}
+
+.post-save-share {
+    margin-bottom: 5px;
 }
 
 @media all and (max-width: 768px) {
