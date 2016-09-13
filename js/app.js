@@ -376,9 +376,10 @@ TacoMap.prototype.getInfoWindowHTML = function() {
 
     var shares = this.getShareLinks();
 
-    var html = '<p>Tell your friend: ‘Hey! I just put a (virtual) taco truck on the map for you. Hopefully, when the taco truck invasion happens, they’ll put a real taco truck there!</p>';
-    html += '<p><a href="https://www.hillaryclinton.com/donate/?amount=3.00&utm_source=tacotruckparty" target="donate" class="btn btn-primary log-action" data-action="donate">Donate $3 to Hillary</a></p>';
-    html += '<div>Share: <a href="' + shares.twitter + '" class="btn btn-secondary btn-tweet js-share-twitter log-action" data-action="tweet"><i class="fa fa-twitter" /></i> Tweet</a><a href="'+ shares.facebook +'" class="btn btn-secondary btn-share js-share-facebook log-action" data-action="share"><i class="fa fa-facebook-official" ></i> Share</a></div>';
+    var html = '<div class="popup-share"><p>Tell your friend: ‘Hey! I just put a (virtual) taco truck on the map for you. Hopefully, when the taco truck invasion happens, they’ll put a real taco truck there!</p>';
+    html += '<p><a href="https://www.hillaryclinton.com/donate/?amount=3.00&utm_source=tacotruckparty" target="donate" class="btn btn-xs btn-primary log-action" data-action="donate">Donate $3 to Hillary</a> ';
+    html += '<a href="' + shares.twitter + '" class="btn btn-xs btn-secondary btn-tweet js-share-twitter log-action" data-action="tweet"><i class="fa fa-twitter" /></i> Tweet</a> ';
+    html += '<a href="'+ shares.facebook +'" class="btn btn-xs btn-secondary btn-share js-share-facebook log-action" data-action="share"><i class="fa fa-facebook-official" ></i> Share</a></p></div>';
 
     return html;
 };
