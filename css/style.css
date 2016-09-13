@@ -136,7 +136,7 @@ B.btn-tweet:active, .btn-share:active, .btn-tweet:hover, .btn-share:hover, .btn-
 }
 
 .post-save-share {
-    margin-bottom: 5px;
+    margin-top: 5px;
 }
 
 @media all and (max-width: 768px) {
