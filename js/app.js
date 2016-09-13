@@ -384,7 +384,7 @@ TacoMap.prototype.getInfoWindowShareButtons = function() {
 };
 
 TacoMap.prototype.getInfoWindowHTML = function() {
-    var html = '<div class="popup-share"><p>Tell your friend: ‘Hey! I just put a (virtual) taco truck on the map for you. Hopefully, when the taco truck invasion happens, they’ll put a real taco truck there!</p>';
+    var html = '<div class="popup-share"><p>Tell your friends: "Hey! Check out my new (virtual) taco truck!"</p>';
     html += '<p>'+this.getInfoWindowShareButtons()+'</p></div>';
     return html;
 };
