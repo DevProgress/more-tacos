@@ -61,7 +61,7 @@ var CONFIG = {
           height: 34,
           width: 60,
           url: 'images/marker_truck_blue_plain.png',
-          textColor: '#fff'
+          textColor: '#fece3f'
         }
       ]
     },
@@ -324,7 +324,9 @@ TacoMap.prototype.saveMarker = function() {
     }.bind(this));
 
     google.maps.event.addListenerOnce(this._userMarker, 'dragend', function() {
-      this._iw.setContent($(CONFIG.TACO_MAP.savePrompt).html());
+      var html = $(CONFIG.TACO_MAP.savePrompt).html();
+      html += '<p class="post-save-share">'+this.getInfoWindowShareButtons()+'</p>'
+      this._iw.setContent(html);
     }.bind(this));
 
     // Reset the map busy state and trigger a success event.
@@ -373,14 +375,17 @@ TacoMap.prototype.getShareLinks = function() {
  * @return {HTML} Returns window html
  */
 
-TacoMap.prototype.getInfoWindowHTML = function() {
-
+TacoMap.prototype.getInfoWindowShareButtons = function() {
     var shares = this.getShareLinks();
+    var html = '<a href="https://www.hillaryclinton.com/donate/?amount=3.00&utm_source=tacotruckparty" target="donate" class="btn btn-xs btn-primary log-action" data-action="donate">Donate $3 to Hillary</a> ';
+    html += '<a href="' + shares.twitter + '" class="btn btn-xs btn-secondary btn-tweet js-share-twitter log-action" data-action="tweet"><i class="fa fa-twitter" /></i> Tweet</a> ';
+    html += '<a href="'+ shares.facebook +'" class="btn btn-xs btn-secondary btn-share js-share-facebook log-action" data-action="share"><i class="fa fa-facebook-official" ></i> Share</a>';
+    return html;
+};
 
-    var html = '<p>Tell your friend: ‘Hey! I just put a (virtual) taco truck on the map for you. Hopefully, when the taco truck invasion happens, they’ll put a real taco truck there!</p>';
-    html += '<p><a href="https://www.hillaryclinton.com/donate/?amount=3.00&utm_source=tacotruckparty" target="donate" class="btn btn-primary log-action" data-action="donate">Donate $3 to Hillary</a></p>';
-    html += '<div>Share: <a href="' + shares.twitter + '" class="btn btn-secondary btn-tweet js-share-twitter log-action" data-action="tweet"><i class="fa fa-twitter" /></i> Tweet</a><a href="'+ shares.facebook +'" class="btn btn-secondary btn-share js-share-facebook log-action" data-action="share"><i class="fa fa-facebook-official" ></i> Share</a></div>';
-
+TacoMap.prototype.getInfoWindowHTML = function() {
+    var html = '<div class="popup-share"><p>Tell your friend: ‘Hey! I just put a (virtual) taco truck on the map for you. Hopefully, when the taco truck invasion happens, they’ll put a real taco truck there!</p>';
+    html += '<p>'+this.getInfoWindowShareButtons()+'</p></div>';
     return html;
 };
 
