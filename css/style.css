@@ -113,7 +113,10 @@ B.btn-tweet:active, .btn-share:active, .btn-tweet:hover, .btn-share:hover, .btn-
     color: #fff;
 }
 
-.popup-share .btn {
+.popup-share {
+    text-align: center;
+}
+.popup-share .btn-tweet {
     margin-right: 10px;
 }
 
