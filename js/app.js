@@ -68,8 +68,6 @@ var CONFIG = {
     // ELement selector for the inital tooltip save prompt.
     initialMessage: '#initial-content',
     initialMessageWithPos: '#initial-content-with-initial-pos',
-    // ELement selector for the save prompt after initial drag.
-    savePrompt: '#save-content',
     // format values for marker icons
     clusterCalculator: function(markers, numStyles) {
       var count = markers.length;
@@ -315,7 +313,6 @@ TacoMap.prototype.saveMarker = function() {
     });
 
     // Display the donation/share CTA.
-    //this._iw.setContent($(CONFIG.TACO_MAP.saveConfirmation).html());
     this._iw.setContent(this.getInfoWindowHTML());
     this._iw.open(this._map, this._userMarker);
     // need to add this here because it wasn't in the DOM before
@@ -324,9 +321,7 @@ TacoMap.prototype.saveMarker = function() {
     }.bind(this));
 
     google.maps.event.addListenerOnce(this._userMarker, 'dragend', function() {
-      var html = $(CONFIG.TACO_MAP.savePrompt).html();
-      html += '<p class="post-save-share">'+this.getInfoWindowShareButtons()+'</p>'
-      this._iw.setContent(html);
+      this._iw.setContent($('#initial-content').html());
     }.bind(this));
 
     // Reset the map busy state and trigger a success event.
@@ -339,7 +334,7 @@ TacoMap.prototype.saveMarker = function() {
     this._iw.open(this._map, this._userMarker);
 
     google.maps.event.addListenerOnce(this._userMarker, 'dragend', function() {
-      this._iw.setContent($(CONFIG.TACO_MAP.savePrompt).html());
+      this._iw.setContent($('#initial-content').html());
     }.bind(this));
 
     this._map._isBusy = false;
@@ -377,14 +372,14 @@ TacoMap.prototype.getShareLinks = function() {
 
 TacoMap.prototype.getInfoWindowShareButtons = function() {
     var shares = this.getShareLinks();
-    var html = '<a href="https://www.hillaryclinton.com/donate/?amount=3.00&utm_source=tacotruckparty" target="donate" class="btn btn-xs btn-primary log-action" data-action="donate">Donate $3 to Hillary</a> ';
-    html += '<a href="' + shares.twitter + '" class="btn btn-xs btn-secondary btn-tweet js-share-twitter log-action" data-action="tweet"><i class="fa fa-twitter" /></i> Tweet</a> ';
-    html += '<a href="'+ shares.facebook +'" class="btn btn-xs btn-secondary btn-share js-share-facebook log-action" data-action="share"><i class="fa fa-facebook-official" ></i> Share</a>';
+    //var html = '<a href="https://www.hillaryclinton.com/donate/?amount=10.00&utm_source=tacotruckparty" target="donate" class="btn btn-xs btn-primary log-action" data-action="donate">Donate</a> ';
+    var html = '<a href="' + shares.twitter + '" class="btn btn-xs btn-secondary btn-tweet js-share-twitter log-action" data-action="tweet"><i class="fa fa-twitter" /></i> Tweet</a> ';
+    html += '<a href="'+ shares.facebook +'" class="btn btn-xs btn-secondary btn-share js-share-facebook log-action" data-action="share" target="share"><i class="fa fa-facebook-official" ></i> Share</a>';
     return html;
 };
 
 TacoMap.prototype.getInfoWindowHTML = function() {
-    var html = '<div class="popup-share"><p>Tell your friends: "Hey! Check out my new (virtual) taco truck!"</p>';
+    var html = '<div class="popup-share"><p>Tell your friends:<br>"I just sponsored a taco truck at TacoTruck.Party"</p>';
     html += '<p>'+this.getInfoWindowShareButtons()+'</p></div>';
     return html;
 };
@@ -517,6 +512,7 @@ function initialize() {
     }
 
     tacoMap.saveMarker();
+    return true;
   });
   $('.log-action').on('click', function() {
     tacoMap.logAction($(this).attr('data-action'));
@@ -537,7 +533,6 @@ function initialize() {
 
       var url = $(this).attr('href');
       handleShareLinks(url, 400,400);
-
   });
 
 }
