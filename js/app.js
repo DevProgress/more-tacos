@@ -362,8 +362,8 @@ TacoMap.prototype.getShareLinks = function() {
     var url = window.location.href;
 
     return {
-        twitter: 'http://twitter.com/intent/tweet?url='+ encodeURIComponent(url) + '&text=I%20just%20sponsored%20a%20virtual%20taco%20truck.%20You%20can,%20too.%20Save%20The%20Tacos.&hashtags=ImWithHer,TacoTruckParty',
-        facebook: 'http://facebook.com/sharer/sharer.php?u='+ url
+        twitter: 'http://twitter.com/intent/tweet?url='+ encodeURIComponent(url) + '&text=I%20just%20sponsored%20a%20virtual%20taco%20truck.%20You%20can,%20too.%20Taco trucks on every corner.&hashtags=ImWithHer,TacoTruckParty',
+        facebook: 'http://facebook.com/sharer/sharer.php?u='+ encodeURIComponent(url)
     }
 
 }
