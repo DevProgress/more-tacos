@@ -36,12 +36,13 @@ h4 {
 
 .btn-primary {
     background-color: #1A237E;
+    border-color: #1A237E;
     color: #fff;
 }
 
 .donate .btn-primary {
-    background-color: #254da3;
-    border-color: #254da3;
+    background-color: #1A237E;
+    border-color: #1A237E;
 }
 
 .btn-primary a {
