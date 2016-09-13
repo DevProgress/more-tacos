@@ -221,8 +221,9 @@ TacoMap.prototype._updateHash = function() {
   $(this._map).trigger('updatedHash');
 
   var newPos = this.getUserPosition();
-  history.replaceState(null, null, '#' + newPos.lat + '_' + newPos.lng + '_' +
-      this._map.getZoom());
+  var hash = '#/lat/' + newPos.lat + '/lng/' + newPos.lng + '/zoom/' + this._map.getZoom()
+
+  history.replaceState(null, null,hash);
 
   return this;
 
@@ -455,26 +456,43 @@ function initialize() {
   var initialPos = null;
   var initialZoom = null;
 
-  if (location.hash) {
-    var coords = location.hash.replace('#', '').split('_');
-    try {
-      var coord = {
-        lat: parseFloat(coords[0]),
-        lng: parseFloat(coords[1])
-      };
-      if (TacoMap.isValidCoord(coord)) {
-        initialPos = coord;
-      }
-    } catch (e) {}
-    if (coords[2]) {
+  var r = Rlite();
+
+  r.add('lat/:lat/lng/:lng/zoom/:zoom', function (r) {
+
       try {
-        var zoom = parseInt(coords[2], 10);
-        if (zoom >= 0 && zoom <= 18) {
-          initialZoom = zoom;
+        var coord = {
+          lat: parseFloat(r.params.lat),
+          lng: parseFloat(r.params.lng)
+        };
+        if (TacoMap.isValidCoord(coord)) {
+          initialPos = coord;
         }
       } catch (e) {}
-    }
+
+      if (r.params.zoom) {
+        try {
+          var zoom = parseInt(r.params.zoom, 10);
+          if (zoom >= 0 && zoom <= 18) {
+            initialZoom = zoom;
+          }
+        } catch (e) {}
+      }
+
+  });
+
+  // quick & dirty for routing
+
+  // Hash-based routing
+  function processHash() {
+    var hash = location.hash || '#';
+    r.run(hash.slice(1));
   }
+
+  window.addEventListener('hashchange', processHash);
+
+  processHash();
+
 
   tacoMap = new TacoMap(document.getElementById('map'),
       window.firebase.database(), initialPos, initialZoom);
