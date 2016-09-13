@@ -61,7 +61,7 @@ var CONFIG = {
           height: 34,
           width: 60,
           url: 'images/marker_truck_blue_plain.png',
-          textColor: '#fff'
+          textColor: '#fece3f'
         }
       ]
     },
