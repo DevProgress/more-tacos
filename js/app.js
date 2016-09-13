@@ -41,8 +41,8 @@ var CONFIG = {
     // Active taco truck icon settings.
     userMarker: {
       anchor: {
-        x: 30,
-        y: 0
+        x: 0,
+        y: 12
       },
       origin: {
         x: 0,
