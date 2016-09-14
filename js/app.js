@@ -357,7 +357,7 @@ TacoMap.prototype.getShareLinks = function() {
     var url = window.location.href;
 
     return {
-        twitter: 'http://twitter.com/intent/tweet?url='+ encodeURIComponent(url) + '&text=I%20just%20sponsored%20a%20virtual%20taco%20truck.%20You%20can,%20too.%20Taco trucks on every corner.&hashtags=ImWithHer,TacoTruckParty',
+        twitter: 'http://twitter.com/intent/tweet?url='+ encodeURIComponent(url) + '&text=I%20just%20sponsored%20a%20virtual%20taco%20truck.%20You%20can,%20too.%20Taco trucks on every corner.&hashtags=ImWithHer,TacoTrucksParty',
         facebook: 'http://facebook.com/sharer/sharer.php?u='+ encodeURIComponent(url)
     }
 
@@ -372,14 +372,14 @@ TacoMap.prototype.getShareLinks = function() {
 
 TacoMap.prototype.getInfoWindowShareButtons = function() {
     var shares = this.getShareLinks();
-    //var html = '<a href="https://www.hillaryclinton.com/donate/?amount=10.00&utm_source=tacotruckparty" target="donate" class="btn btn-xs btn-primary log-action" data-action="donate">Donate</a> ';
+    //var html = '<a href="https://www.hillaryclinton.com/donate/?amount=10.00&utm_source=tacotrucksparty" target="donate" class="btn btn-xs btn-primary log-action" data-action="donate">Donate</a> ';
     var html = '<a href="' + shares.twitter + '" class="btn btn-xs btn-secondary btn-tweet js-share-twitter log-action" data-action="tweet"><i class="fa fa-twitter" /></i> Tweet</a> ';
     html += '<a href="'+ shares.facebook +'" class="btn btn-xs btn-secondary btn-share js-share-facebook log-action" data-action="share" target="share"><i class="fa fa-facebook-official" ></i> Share</a>';
     return html;
 };
 
 TacoMap.prototype.getInfoWindowHTML = function() {
-    var html = '<div class="popup-share"><p>Tell your friends:<br>"I just sponsored a taco truck at TacoTruck.Party"</p>';
+    var html = '<div class="popup-share"><p>Tell your friends:<br>"I just sponsored a taco truck at TacoTrucks.Party"</p>';
     html += '<p>'+this.getInfoWindowShareButtons()+'</p></div>';
     return html;
 };
