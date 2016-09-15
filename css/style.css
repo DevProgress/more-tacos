@@ -155,6 +155,12 @@ B.btn-tweet:active, .btn-share:active, .btn-tweet:hover, .btn-share:hover, .btn-
     h1 {
         font-size: 60px;
     }
+    .description {
+        display: none;
+    }
+    .headline h4 {
+        cursor: pointer;
+    }
 }
 
 @media all and (min-width: 769px) {

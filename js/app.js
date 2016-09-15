@@ -437,6 +437,24 @@ function initialize() {
   var initialPos = null;
   var initialZoom = null;
 
+  // show description as dismissible popover on mobile
+  if (!$('.description:visible').length) {
+    $('#description-popover').popover({
+      placement: 'bottom',
+      html: true,
+      content: $('#description-text').html()
+    });
+    $('#description-popover').popover('show');
+    $('#description-popover').on('click', function() {
+      $('#description-popover').popover('toggle');
+    });
+    setTimeout(function() {
+      $('#description-popover').popover('hide');
+    }, 10000);
+    $('.popover-content').on('click', function (e) {
+      $('#description-popover').popover('hide');
+    });
+  }
   var r = Rlite();
 
   r.add('lat/:lat/lng/:lng/zoom/:zoom', function (r) {
