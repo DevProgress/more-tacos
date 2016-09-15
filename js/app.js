@@ -25,14 +25,6 @@ var CONFIG = {
     },
     // Static taco truck icon settings.
     staticMarker: {
-      anchor: {
-        x: 30,
-        y: 0
-      },
-      origin: {
-        x: 0,
-        y: 0
-      },
       // Google maps marker creation has these backwards
       height: 60,
       width: 34,
@@ -40,14 +32,6 @@ var CONFIG = {
     },
     // Active taco truck icon settings.
     userMarker: {
-      anchor: {
-        x: 0,
-        y: 12
-      },
-      origin: {
-        x: 0,
-        y: 0
-      },
       height: 60,
       width: 34,
       url: 'images/marker_truck_dkblue.png',
@@ -126,11 +110,8 @@ var TacoMap = function(mapEl, database, initialPosition, initialZoom) {
   /** @private {google.maps.Marker} The user's draggable marker. */
   this._userMarker = new google.maps.Marker({
     draggable: true,
+    raiseOnDrag: false,
     icon: {
-      anchor: new google.maps.Point(CONFIG.TACO_MAP.userMarker.anchor.x,
-          CONFIG.TACO_MAP.userMarker.anchor.y),
-      origin: new google.maps.Point(CONFIG.TACO_MAP.userMarker.origin.x,
-          CONFIG.TACO_MAP.userMarker.origin.y),
       size: new google.maps.Size(CONFIG.TACO_MAP.userMarker.height,
           CONFIG.TACO_MAP.userMarker.width),
       url: CONFIG.TACO_MAP.userMarker.url
