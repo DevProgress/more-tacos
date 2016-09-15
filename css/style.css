@@ -19,11 +19,12 @@ h4 {
     color: #1A237E;
     font-weight: bold;
     margin-top: 0;
+    margin-bottom: 0;
 }
 
 .footer {
     text-align: center;
-    margin-top: 15px;
+    margin-top: 5px;
 }
 
 .social {
@@ -32,6 +33,7 @@ h4 {
 
 .attribution {
     color: #666;
+    font-size: 12px;
 }
 
 
@@ -150,7 +152,7 @@ B.btn-tweet:active, .btn-share:active, .btn-tweet:hover, .btn-share:hover, .btn-
     }
     #map {
         border: 5px solid #fff;
-        height: 370px;
+        height: 460px;
     }
     h1 {
         font-size: 60px;
