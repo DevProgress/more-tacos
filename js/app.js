@@ -49,6 +49,9 @@ var CONFIG = {
         }
       ]
     },
+    // Element selector for the search input.
+    searchInput: '#search',
+
     // ELement selector for the inital tooltip save prompt.
     initialMessage: '#initial-content',
     initialMessageWithPos: '#initial-content-with-initial-pos',
@@ -121,6 +124,11 @@ var TacoMap = function(mapEl, database, initialPosition, initialZoom) {
     zIndex: 10
   });
 
+  /** @private {google.maps.places.SearchBox} Autocomplete search box. */
+  this._searchInput = $(CONFIG.TACO_MAP.searchInput)[0];
+  this._searchBox = new google.maps.places
+      .SearchBox(this._searchInput);
+
   if (initialPosition) {
     this._iw.setContent($(CONFIG.TACO_MAP.initialMessageWithPos).html());
   } else {
@@ -178,7 +186,25 @@ TacoMap.prototype._init = function() {
 
   this._map.addListener('zoom_changed', function() {
     this._updateHash();
-  }.bind(this))
+  }.bind(this));
+
+  // Add the search input to the map.
+  this._map.controls[google.maps.ControlPosition.TOP_LEFT]
+      .push(this._searchInput);
+
+  // Bias the SearchBox results towards current map's viewport.
+  this._map.addListener('bounds_changed', function() {
+    this._searchBox.setBounds(this._map.getBounds());
+  }.bind(this));
+
+  // Handle changes to the search box.
+  this._searchBox.addListener('places_changed', function() {
+    var places = searchBox.getPlaces();
+    var place = places[0]
+    if (place && place.geometry) {
+      this.setCenter(place.geometry.location);
+    }
+  }.bind(this));
 
   this._updateHash();
 
@@ -200,7 +226,8 @@ TacoMap.prototype._updateHash = function() {
   $(this._map).trigger('updatedHash');
 
   var newPos = this.getUserPosition();
-  var hash = '#/lat/' + newPos.lat + '/lng/' + newPos.lng + '/zoom/' + this._map.getZoom()
+  var hash = '#/lat/' + newPos.lat + '/lng/' + newPos.lng + '/zoom/' +
+      this._map.getZoom()
 
   history.replaceState(null, null,hash);
 
@@ -338,7 +365,7 @@ TacoMap.prototype.getShareLinks = function() {
     var url = window.location.href;
 
     return {
-        twitter: 'http://twitter.com/intent/tweet?url='+ encodeURIComponent(url) + '&text=I%20just%20sponsored%20a%20virtual%20taco%20truck.%20You%20can,%20too.%20Taco trucks on every corner.&hashtags=ImWithHer,TacoTrucksOnEveryCorner',
+        twitter: 'http://twitter.com/intent/tweet?url=' + encodeURIComponent(url) + '&text=I%20just%20sponsored%20a%20virtual%20taco%20truck.%20You%20can,%20too.%20Taco trucks on every corner.&hashtags=ImWithHer,TacoTrucksOnEveryCorner',
         facebook: 'http://facebook.com/sharer/sharer.php?u='+ encodeURIComponent(url)
     }
 
@@ -545,7 +572,7 @@ window.firebase.initializeApp(CONFIG.FIREBASE);
  * Load the Google Maps API.
  */
 google.load('maps', '3', {
-  other_params: 'key=' + CONFIG.GOOGLE_API_KEY,
+  other_params: 'key=' + CONFIG.GOOGLE_API_KEY + '&libraries=places',
   callback: initialize
 });
 
