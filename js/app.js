@@ -199,10 +199,13 @@ TacoMap.prototype._init = function() {
 
   // Handle changes to the search box.
   this._searchBox.addListener('places_changed', function() {
-    var places = searchBox.getPlaces();
-    var place = places[0]
+    var places = this._searchBox.getPlaces();
+    var place = places[0];
     if (place && place.geometry) {
-      this.setCenter(place.geometry.location);
+      this.setCenter({
+        lat: place.geometry.location.lat(),
+        lng: place.geometry.location.lng()
+      });
     }
   }.bind(this));
 

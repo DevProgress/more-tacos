@@ -98,7 +98,13 @@ table.metrics {
     width: 300px;
 }
 
-
+.search-field {
+    font-size: 14px;
+    margin: 4px;
+    max-width: 300px;
+    padding: 5px;
+    width: 100%;
+}
 /* Share Links */
 
 .btn-tweet{
