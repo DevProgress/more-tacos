@@ -23,18 +23,32 @@ var CONFIG = {
       lat: 38.897885,
       lng: -77.036508
     },
-    // Static taco truck icon settings.
-    staticMarker: {
-      // Google maps marker creation has these backwards
-      height: 60,
-      width: 34,
-      url: 'images/marker_truck_blue.png',
+    // Settings for static icons already placed by other users
+    staticMarkers: {
+      tacoTruck: {
+        // Google maps marker creation has these backwards
+        height: 60,
+        width: 34,
+        url: 'images/marker_truck_blue.png',
+      },
+      skittles: {
+        height: 60,
+        width: 34,
+        url: 'images/skittles_scaled.png'
+      }
     },
-    // Active taco truck icon settings.
-    userMarker: {
-      height: 60,
-      width: 34,
-      url: 'images/marker_truck_dkblue.png',
+    // Settings for active icons
+    userMarkers: {
+      tacoTruck: {
+        height: 60,
+        width: 34,
+        url: 'images/marker_truck_dkblue.png',
+      },
+      skittles: {
+        height: 78,
+        width: 48,
+        url: 'images/skittles_scaled.png'
+      }
     },
     // MarkerCluster options.
     mcOptions: {
@@ -112,9 +126,9 @@ var TacoMap = function(mapEl, database, initialPosition, initialZoom) {
     draggable: true,
     raiseOnDrag: false,
     icon: {
-      size: new google.maps.Size(CONFIG.TACO_MAP.userMarker.height,
-          CONFIG.TACO_MAP.userMarker.width),
-      url: CONFIG.TACO_MAP.userMarker.url
+      size: new google.maps.Size(CONFIG.TACO_MAP.userMarkers.tacoTruck.height,
+          CONFIG.TACO_MAP.userMarkers.tacoTruck.width),
+      url: CONFIG.TACO_MAP.userMarkers.tacoTruck.url
     },
     map: this._map,
     position: this._initialPosition,
@@ -133,6 +147,9 @@ var TacoMap = function(mapEl, database, initialPosition, initialZoom) {
   /** @private {boolean} Whether or not this map is currently saving a new
     marker. */
   this._isBusy = false;
+
+  /** @private {string} Type of current marker to drop */
+  this._toInsert = "tacoTruck";
 
   this._init();
 };
@@ -158,7 +175,7 @@ TacoMap.prototype._init = function() {
     this.addMarker({
       lat: data.val().lat,
       lng: data.val().lng
-    });
+    }, data.val().type);
   }.bind(this));
 
   google.maps.event.addListener(this._userMarker, 'dragend', function() {
@@ -209,6 +226,23 @@ TacoMap.prototype._updateHash = function() {
 };
 
 /**
+ * Finds the icon object corresponding to a type.
+ * @method
+ * @param {string} type - "tacoTruck" or "skittles" for now.
+ * @param {boolean} static - true for a static icon and false for a user icon
+ * @returns {Object} icon
+ */
+var getMarkerIcon = function(type, static) {
+  type = type || "tacoTruck";
+  var markers = static ? CONFIG.TACO_MAP.staticMarkers : CONFIG.TACO_MAP.userMarkers;
+  if (!markers.hasOwnProperty(type)) {
+    type = "tacoTruck";
+  }
+  var icon = $.extend({}, markers[type]);
+  return icon;
+};
+
+/**
  * Adds a marker to the map's MarkerClusterer manager at the provided
  * coordinates.
  * @method
@@ -217,13 +251,13 @@ TacoMap.prototype._updateHash = function() {
  * @param {Object} coord.lng - Coordinate object's latitude.
  * @return {this} TacoMap
  */
-TacoMap.prototype.addMarker = function(coord) {
+TacoMap.prototype.addMarker = function(coord, type) {
   if (!TacoMap.isValidCoord(coord)) {
     return this;
   }
 
   var marker = new google.maps.Marker({
-    icon: CONFIG.TACO_MAP.staticMarker,
+    icon: getMarkerIcon(type, /* static */ true),
     position: coord,
     zIndex: 9,
     map: this._map
@@ -279,7 +313,8 @@ TacoMap.prototype.saveMarker = function() {
   // stop the bounce animation
   var key = this._db.ref().child('trucks').push().key;
   var update = {};
-  update['/trucks/' + key] = this.getUserPosition();
+
+  update['/trucks/' + key] = $.extend({type: this._toInsert}, this.getUserPosition());
   this._map._isBusy = true;
   this._db.ref().update(update).then(function() {
     // Success handler when the save is complete.
@@ -532,6 +567,12 @@ function initialize() {
 
       var url = $(this).attr('href');
       handleShareLinks(url, 400,400);
+  });
+
+  $('body').on('click', '.js-skittle-mode li a', function(event) {
+    event.preventDefault();
+    tacoMap._toInsert = $(this).attr('data-value');
+    tacoMap._userMarker.setIcon(getMarkerIcon(tacoMap._toInsert, false));
   });
 
 }

@@ -85,6 +85,13 @@ h4 {
     margin-bottom: 5px;
 }
 
+#controls {
+    position: absolute;
+    z-index: 100;
+    top: 10px;
+    left: 24px;
+}
+
 .map-row {
     position: relative;
     margin-top: 10px;
