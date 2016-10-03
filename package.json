@@ -5,7 +5,11 @@
   "description": "Helping us visualize a taco truck on every corner... and then some.",
   "main": "app.js",
   "scripts": {
-    "test": "npm run gulp-test"
+    "gulp-dev": "gulp build:development",
+    "gulp-prod": "gulp build:production",
+    "gulp-lint": "gulp lint",
+    "gulp-watch": "gulp watch",
+    "gulp": "gulp"
   },
   "repository": {
     "type": "git",
@@ -21,8 +25,11 @@
   },
   "homepage": "https://github.com/DevProgress/more-tacos#readme",
   "devDependencies": {
+    "del": "^2.2.2",
     "gulp": "^3.9.1",
+    "gulp-clean-css": "^2.0.13",
     "gulp-concat": "^2.6.0",
+    "gulp-imagemin": "^3.0.3",
     "gulp-jshint": "^2.0.1",
     "gulp-run": "^1.7.1",
     "gulp-uglify": "^2.0.0",
@@ -32,10 +39,5 @@
   "dependencies": {
     "js-marker-clusterer": "^1.0.0",
     "rlite-router": "^1.1.3"
-  },
-  "scripts": {
-    "gulp-build": "gulp build",
-    "gulp-lint": "gulp lint",
-    "gulp-watch": "gulp watch"
   }
 }
