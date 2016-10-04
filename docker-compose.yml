@@ -3,10 +3,10 @@ services:
   more-tacos:
     build:
       dockerfile: Dockerfile
-      context: .
+      context: ./app
     image: devprogress/more-tacos:latest
     command: npm run gulp-watch
     ports:
       - "4000:4000"
     volumes:
-      - .:/opt/more-tacos
+      - ./app:/opt/more-tacos
