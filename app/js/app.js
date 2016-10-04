@@ -178,7 +178,7 @@ TacoMap.prototype._init = function() {
 
   this._map.addListener('zoom_changed', function() {
     this._updateHash();
-  }.bind(this))
+  }.bind(this));
 
   this._updateHash();
 
@@ -193,14 +193,14 @@ TacoMap.prototype._init = function() {
  */
 TacoMap.prototype._updateHash = function() {
 
-  if (!'replaceState' in history) {
+  if (!('replaceState' in history)) {
     return this;
   }
 
   $(this._map).trigger('updatedHash');
 
   var newPos = this.getUserPosition();
-  var hash = '#/lat/' + newPos.lat + '/lng/' + newPos.lng + '/zoom/' + this._map.getZoom()
+  var hash = '#/lat/' + newPos.lat + '/lng/' + newPos.lng + '/zoom/' + this._map.getZoom();
 
   history.replaceState(null, null,hash);
 
@@ -340,9 +340,9 @@ TacoMap.prototype.getShareLinks = function() {
     return {
         twitter: 'http://twitter.com/intent/tweet?url='+ encodeURIComponent(url) + '&text=I%20just%20sponsored%20a%20virtual%20taco%20truck.%20You%20can,%20too.%20Taco trucks on every corner.&hashtags=ImWithHer,TacoTrucksOnEveryCorner',
         facebook: 'http://facebook.com/sharer/sharer.php?u='+ encodeURIComponent(url)
-    }
+    };
 
-}
+};
 
 
 /**
@@ -426,7 +426,7 @@ function debounce(func, wait, immediate) {
 		timeout = setTimeout(later, wait);
 		if (callNow) func.apply(context, args);
 	};
-};
+}
 
 /**
  * Initialization callback to kick things off once Google maps have loaded.
