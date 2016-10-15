@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile
       context: ./app
     image: devprogress/more-tacos:latest
-    command: npm run gulp-watch
+    command: npm start
     ports:
       - "4000:4000"
     volumes:

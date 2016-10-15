@@ -12,7 +12,7 @@ https://devprogress.us/more-tacos/
 
     - install node >= 0.12
     - install dependencies in the app directory: `npm install`
-    - start the development server from the app directory: `npm run gulp-watch`
+    - start the development server from the app directory: `npm start`
 
   To run from within Docker container (helpful if you do not want to install node on the host):
 

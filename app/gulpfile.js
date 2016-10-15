@@ -10,6 +10,7 @@ var cleancss = require('gulp-clean-css');
 var htmlmin = require('gulp-htmlmin');
 var del = require('del');
 var connect = require('gulp-connect');
+var runSequence = require('run-sequence');
 
 var vendorScripts = [
     'node_modules/js-marker-clusterer/src/markerclusterer.js',
@@ -74,11 +75,11 @@ gulp.task('connect', function() {
 });
 
 gulp.task('watch', ['connect'], function () {
-    gulp.watch('**.html', ['copy:html']);
     gulp.watch('js/**/*.js', ['lint', 'copy:scripts']);
     gulp.watch('css/**/*.css', ['copy:scripts']);
     gulp.watch('images/*.png', ['minify:images']);
     gulp.watch(vendorScripts, ['copy:vendor']);
+    gulp.watch('**.html', ['copy:html']);
 });
 
 gulp.task('lint', function() {
@@ -92,6 +93,8 @@ gulp.task('build:production', ['clean', 'lint', 'minfy:vendor', 'minify:scripts'
 gulp.task('build:development', ['clean', 'lint', 'copy:vendor', 'copy:scripts', 'copy:html',
           'minify:images', 'copy:css']);
 
-gulp.task('run', ['build:development', 'watch']);
+gulp.task('run', function(cb) {
+    runSequence('build:development', 'watch', cb);
+});
 
 gulp.task('default', ['run']);
