@@ -12,7 +12,7 @@ TacoTranslator = (function(window, $, Polyglot) {
     function TacoTranslator() {}
 
     TacoTranslator.prototype.initialize = initialize;
-    TacoTranslator.prototype.translatePhraseInElement = translatePhraseInElement;
+    TacoTranslator.prototype.translateElement = translateElement;
     TacoTranslator.prototype.translatePhrase = translatePhrase;
 
     return TacoTranslator;
@@ -51,7 +51,7 @@ TacoTranslator = (function(window, $, Polyglot) {
      * @param {Object} $el jQuery element to translate
      * @returns {Object} $el jQuery element, translated 
      */
-    function translatePhraseInElement($el) {
+    function translateElement($el) {
         if (!locale || !phrases) {
             return $el; // no translation for given locale, or not initialized; return as-is
         }
