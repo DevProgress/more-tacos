@@ -130,8 +130,8 @@ var TacoMap = function(mapEl, database, initialPosition, initialZoom) {
     var $positionedMessage = $(CONFIG.TACO_MAP.initialMessageWithPos);
     var $message = $(CONFIG.TACO_MAP.initialMessage);
 
-    $positionedMessage = self._translator.translatePhraseInElement($positionedMessage);
-    $message = self._translator.translatePhraseInElement($message);
+    $positionedMessage = self._translator.translateElement($positionedMessage);
+    $message = self._translator.translateElement($message);
 
     if (initialPosition) {
       self._iw.setContent($positionedMessage.html());
@@ -377,14 +377,33 @@ TacoMap.prototype.getShareLinks = function() {
 TacoMap.prototype.getInfoWindowShareButtons = function() {
     var shares = this.getShareLinks();
     //var html = '<a href="https://www.hillaryclinton.com/donate/?amount=10.00&utm_source=tacotrucksparty" target="donate" class="btn btn-xs btn-primary log-action" data-action="donate">Donate</a> ';
-    var html = '<a href="' + shares.twitter + '" class="btn btn-xs btn-secondary btn-tweet js-share-twitter log-action" data-action="tweet"><i class="fa fa-twitter" /></i> Tweet</a> ';
-    html += '<a href="'+ shares.facebook +'" class="btn btn-xs btn-secondary btn-share js-share-facebook log-action" data-action="share" target="share"><i class="fa fa-facebook-official" ></i> Share</a>';
+    var html = ['<div><a href="',
+                shares.twitter,
+                '" class="btn btn-xs btn-secondary btn-tweet js-share-twitter log-action" ',
+                'data-action="tweet"><i class="fa fa-twitter" /></i> ',
+                '<span class="i18n-tweet">Tweet</span></a> ',
+                '<a href="'+ shares.facebook,
+                '" class="btn btn-xs btn-secondary btn-share js-share-facebook log-action" ',
+                'data-action="share" target="share"><i class="fa fa-facebook-official">',
+                '</i> <span class="i18n-share">Share</span></a></div>'].join('');
+
     return html;
 };
 
 TacoMap.prototype.getInfoWindowHTML = function() {
-    var html = '<div class="popup-share"><p>Tell your friends:<br>"I just sponsored a taco truck at TacoTrucks.Party"</p>';
-    html += '<p>'+this.getInfoWindowShareButtons()+'</p></div>';
+    var html = ['<div class="popup-share">',
+                '<p><span class="i18n-tell-friends">Tell your friends</span>',
+                ':<br>"',
+                '<span class="i18n-tell-friends-message">',
+                'I just sponsored a taco truck at TacoTrucks.Party',
+                '</span>"</p>',
+                this.getInfoWindowShareButtons(),
+                '</p></div>'].join('');
+
+    if (this._translator) {
+      html = this._translator.translateElement($(html)).html();
+    }
+
     return html;
 };
 

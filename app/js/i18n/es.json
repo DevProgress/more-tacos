@@ -21,5 +21,7 @@
     "sponsor": "!Sponsor",
     "popup-tooltip": "!Your very own (virtual) taco truck!",
     "donation-error": "!Something went wrong while trying to save your truck. Try again.",
-    "tweet-text": "!I just sponsored a virtual taco truck. You can, too. Taco trucks on every corner."
+    "tweet-text": "!I just sponsored a virtual taco truck. You can, too. Taco trucks on every corner.",
+    "tell-friends": "!Tell your friends",
+    "tell-friends-message": "!I just sponsored a taco truck at TacoTrucks.Party"
 }
