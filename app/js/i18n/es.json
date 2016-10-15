@@ -4,5 +4,21 @@
     "description-text-start": "!When a Trump supporter",
     "description-text-link": "!warned",
     "description-text-end": "!that immigration would lead to \"taco trucks on every corner,\" we thought that sounded fantastic.  Help us make this American dream an American reality -- place a taco truck on the map, and share it with friends!",
-    "": ""
+    "donate": "!Donate",
+    "tweet": "!Tweet",
+    "share": "!Share",
+    "built-by": "!Built by",
+    "devprogress-link": "!DevProgress",
+    "want-to-help": "!Want to help? It's",
+    "repo-link": "!open source",
+    "icon-attribution": "!Taco truck icon build by Jane Ruby using",
+    "truck": "!Truck",
+    "truck-icon-attribution": "!by John Caserta and",
+    "taco": "!Taco",
+    "taco-icon-attribution": "!by Focus Lab, from the",
+    "noun-project-link": "!The Noun Project",
+    "popup-instructions": "!Drag the taco truck, then",
+    "sponsor": "!Sponsor",
+    "popup-tooltip": "!Your very own (virtual) taco truck!",
+    "donation-error": "!Something went wrong while trying to save your truck. Try again."
 }
