@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "description": "Website to visualize a taco truck on every corner",
   "main": "app.js",
+  "license": "MIT",
   "scripts": {
     "gulp-dev": "gulp build:development",
     "gulp-prod": "gulp build:production",
