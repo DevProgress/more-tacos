@@ -20,5 +20,6 @@
     "popup-instructions": "!Drag the taco truck, then",
     "sponsor": "!Sponsor",
     "popup-tooltip": "!Your very own (virtual) taco truck!",
-    "donation-error": "!Something went wrong while trying to save your truck. Try again."
+    "donation-error": "!Something went wrong while trying to save your truck. Try again.",
+    "tweet-text": "!I just sponsored a virtual taco truck. You can, too. Taco trucks on every corner."
 }

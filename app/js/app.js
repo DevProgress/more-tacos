@@ -348,11 +348,21 @@ TacoMap.prototype.saveMarker = function() {
 TacoMap.prototype.getShareLinks = function() {
 
     // pulls from the updated url
-    var url = window.location.href;
+    var url = encodeURIComponent(window.location.href);
+
+    var tweetText = "I just sponsored a virtual taco truck. You can, too. Taco trucks on every corner.";
+
+    if (this._translator) {
+      tweetText = this._translator.translatePhrase('tweet-text');
+    }
 
     return {
-        twitter: 'http://twitter.com/intent/tweet?url='+ encodeURIComponent(url) + '&text=I%20just%20sponsored%20a%20virtual%20taco%20truck.%20You%20can,%20too.%20Taco trucks on every corner.&hashtags=ImWithHer,TacoTrucksOnEveryCorner',
-        facebook: 'http://facebook.com/sharer/sharer.php?u='+ encodeURIComponent(url)
+        twitter: ['http://twitter.com/intent/tweet?url=',
+                  url,
+                  '&text=',
+                  encodeURIComponent(tweetText),
+                  '&hashtags=ImWithHer,TacoTrucksOnEveryCorner'].join(''),
+        facebook: 'http://facebook.com/sharer/sharer.php?u='+ url
     };
 
 };

@@ -13,6 +13,7 @@ TacoTranslator = (function(window, $, Polyglot) {
 
     TacoTranslator.prototype.initialize = initialize;
     TacoTranslator.prototype.translatePhraseInElement = translatePhraseInElement;
+    TacoTranslator.prototype.translatePhrase = translatePhrase;
 
     return TacoTranslator;
 
@@ -28,6 +29,8 @@ TacoTranslator = (function(window, $, Polyglot) {
         var localeIdx = SUPPORTED_TRANSLATIONS.indexOf(locale);
         if (localeIdx < 0) {
             // browser locale not supported; leave untranslated
+            locale = null;
+            polyglot = null;
             deferred.resolve();
             return deferred;
         }
@@ -49,6 +52,10 @@ TacoTranslator = (function(window, $, Polyglot) {
      * @returns {Object} $el jQuery element, translated 
      */
     function translatePhraseInElement($el) {
+        if (!locale || !phrases) {
+            return $el; // no translation for given locale, or not initialized; return as-is
+        }
+
         var phraseNames = Object.keys(phrases);
         
         for (var i = 0; i < phraseNames.length; i++) {
@@ -56,6 +63,19 @@ TacoTranslator = (function(window, $, Polyglot) {
             $el.find('.i18n-' + phraseName).text(polyglot.t(phraseName));
         }
         return $el;
+    }
+
+    /**
+     * Get translation for a specific phrase in the browser locale.
+     *
+     * @param {string} key Key of the phrase to translate in the JSON dictionary of terms
+     * @return {string} Translated phrase
+     */
+    function translatePhrase(key) {
+        if (!polyglot) {
+            return null;
+        }
+        return polyglot.t(key);
     }
 
     /**
@@ -84,6 +104,10 @@ TacoTranslator = (function(window, $, Polyglot) {
      * @param {Object} phrases Dictionary of translations
      */
     function translate() {
+        if (!polyglot) {
+            return; // no translation for given locale, or not itinialized; bail
+        }
+
         var phraseNames = Object.keys(phrases);
         
         for (var i = 0; i < phraseNames.length; i++) {
