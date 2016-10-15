@@ -1,0 +1,12 @@
+version: '2'
+services:
+  more-tacos:
+    build:
+      dockerfile: Dockerfile
+      context: ./app
+    image: devprogress/more-tacos:latest
+    command: npm start
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./app:/opt/more-tacos

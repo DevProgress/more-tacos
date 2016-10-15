@@ -4,13 +4,22 @@ Display a Google map with a draggable taco truck marker.  On save, write coordin
 
 https://devprogress.us/more-tacos/
 
-## local setup
+## Local setup
 
-Clone this repo
+  Clone this repository.
 
-Run `python -m SimpleHTTPServer 8888`
+  To run directly on the host:
 
-Go to `http://127.0.0.1:8888/`
+    - install node >= 0.12
+    - install dependencies in the app directory: `npm install`
+    - start the development server from the app directory: `npm start`
+
+  To run from within Docker container (helpful if you do not want to install node on the host):
+
+    - install docker and docker-compose
+    - build container: `docker-compose build`
+    - install dependencies: `docker-compose run more-tacos npm install`
+    - start the development server: `docker-compose up`
 
 ## Firebase config
 
