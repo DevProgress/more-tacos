@@ -14,7 +14,8 @@ var runSequence = require('run-sequence');
 
 var vendorScripts = [
     'node_modules/js-marker-clusterer/src/markerclusterer.js',
-    'node_modules/rlite-router/rlite.js'
+    'node_modules/rlite-router/rlite.js',
+    'node_modules/node-polyglot/build/polyglot.js'
 ];
 
 gulp.task('clean', function() {
