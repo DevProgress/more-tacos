@@ -14,7 +14,8 @@ var runSequence = require('run-sequence');
 
 var vendorScripts = [
     'node_modules/js-marker-clusterer/src/markerclusterer.js',
-    'node_modules/rlite-router/rlite.js'
+    'node_modules/rlite-router/rlite.js',
+    'node_modules/node-polyglot/build/polyglot.js'
 ];
 
 gulp.task('clean', function() {
@@ -60,6 +61,11 @@ gulp.task('copy:scripts', function() {
         .pipe(gulp.dest('dist/js'));
 });
 
+gulp.task('copy:translations', function() {
+    return gulp.src('js/i8ln/*.json')
+        .pipe(gulp.dest('dist/js/i8ln'));
+});
+
 gulp.task('copy:css', function() {
     return gulp.src('css/*')
         .pipe(cleancss({compatibility: 'ie8'}))
@@ -76,6 +82,7 @@ gulp.task('connect', function() {
 
 gulp.task('watch', ['connect'], function () {
     gulp.watch('js/**/*.js', ['lint', 'copy:scripts']);
+    gulp.watch('js/i18n/**.json', ['copy:translations']);
     gulp.watch('css/**/*.css', ['copy:scripts']);
     gulp.watch('images/*.png', ['minify:images']);
     gulp.watch(vendorScripts, ['copy:vendor']);
@@ -89,9 +96,9 @@ gulp.task('lint', function() {
 });
 
 gulp.task('build:production', ['clean', 'lint', 'minfy:vendor', 'minify:scripts', 'minify:html',
-          'minify:images', 'copy:css']);
+          'minify:images', 'copy:css', 'copy:translations']);
 gulp.task('build:development', ['clean', 'lint', 'copy:vendor', 'copy:scripts', 'copy:html',
-          'minify:images', 'copy:css']);
+          'minify:images', 'copy:css', 'copy:translations']);
 
 gulp.task('run', function(cb) {
     runSequence('build:development', 'watch', cb);

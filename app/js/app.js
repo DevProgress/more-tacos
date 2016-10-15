@@ -1,6 +1,6 @@
 /* global google, jQuery */
 
-(function(window, $, google) {
+(function(window, $, google, TacoTranslator) {
 
 /**
  * Configuration values for Firebase, Google, and TacoMap options.
@@ -121,11 +121,24 @@ var TacoMap = function(mapEl, database, initialPosition, initialZoom) {
     zIndex: 10
   });
 
-  if (initialPosition) {
-    this._iw.setContent($(CONFIG.TACO_MAP.initialMessageWithPos).html());
-  } else {
-    this._iw.setContent($(CONFIG.TACO_MAP.initialMessage).html());
-  }
+  // translate page and get reference to translator
+  this._translator = new TacoTranslator();
+
+  // translate popup messages once translator loaded
+  var self = this;
+  self._translator.initialize().then(function() {
+    var $positionedMessage = $(CONFIG.TACO_MAP.initialMessageWithPos);
+    var $message = $(CONFIG.TACO_MAP.initialMessage);
+
+    $positionedMessage = self._translator.translateElement($positionedMessage);
+    $message = self._translator.translateElement($message);
+
+    if (initialPosition) {
+      self._iw.setContent($positionedMessage.html());
+    } else {
+      self._iw.setContent($message.html());
+    }
+  });
 
   /** @private {boolean} Whether or not this has been initialized. */
   this._isInitialized = false;
@@ -335,11 +348,21 @@ TacoMap.prototype.saveMarker = function() {
 TacoMap.prototype.getShareLinks = function() {
 
     // pulls from the updated url
-    var url = window.location.href;
+    var url = encodeURIComponent(window.location.href);
+
+    var tweetText = "I just sponsored a virtual taco truck. You can, too. Taco trucks on every corner.";
+
+    if (this._translator) {
+      tweetText = this._translator.translatePhrase('tweet-text');
+    }
 
     return {
-        twitter: 'http://twitter.com/intent/tweet?url='+ encodeURIComponent(url) + '&text=I%20just%20sponsored%20a%20virtual%20taco%20truck.%20You%20can,%20too.%20Taco trucks on every corner.&hashtags=ImWithHer,TacoTrucksOnEveryCorner',
-        facebook: 'http://facebook.com/sharer/sharer.php?u='+ encodeURIComponent(url)
+        twitter: ['http://twitter.com/intent/tweet?url=',
+                  url,
+                  '&text=',
+                  encodeURIComponent(tweetText),
+                  '&hashtags=ImWithHer,TacoTrucksOnEveryCorner'].join(''),
+        facebook: 'http://facebook.com/sharer/sharer.php?u='+ url
     };
 
 };
@@ -354,14 +377,33 @@ TacoMap.prototype.getShareLinks = function() {
 TacoMap.prototype.getInfoWindowShareButtons = function() {
     var shares = this.getShareLinks();
     //var html = '<a href="https://www.hillaryclinton.com/donate/?amount=10.00&utm_source=tacotrucksparty" target="donate" class="btn btn-xs btn-primary log-action" data-action="donate">Donate</a> ';
-    var html = '<a href="' + shares.twitter + '" class="btn btn-xs btn-secondary btn-tweet js-share-twitter log-action" data-action="tweet"><i class="fa fa-twitter" /></i> Tweet</a> ';
-    html += '<a href="'+ shares.facebook +'" class="btn btn-xs btn-secondary btn-share js-share-facebook log-action" data-action="share" target="share"><i class="fa fa-facebook-official" ></i> Share</a>';
+    var html = ['<div><a href="',
+                shares.twitter,
+                '" class="btn btn-xs btn-secondary btn-tweet js-share-twitter log-action" ',
+                'data-action="tweet"><i class="fa fa-twitter" /></i> ',
+                '<span class="i18n-tweet">Tweet</span></a> ',
+                '<a href="'+ shares.facebook,
+                '" class="btn btn-xs btn-secondary btn-share js-share-facebook log-action" ',
+                'data-action="share" target="share"><i class="fa fa-facebook-official">',
+                '</i> <span class="i18n-share">Share</span></a></div>'].join('');
+
     return html;
 };
 
 TacoMap.prototype.getInfoWindowHTML = function() {
-    var html = '<div class="popup-share"><p>Tell your friends:<br>"I just sponsored a taco truck at TacoTrucks.Party"</p>';
-    html += '<p>'+this.getInfoWindowShareButtons()+'</p></div>';
+    var html = ['<div class="popup-share">',
+                '<p><span class="i18n-tell-friends">Tell your friends</span>',
+                ':<br>"',
+                '<span class="i18n-tell-friends-message">',
+                'I just sponsored a taco truck at TacoTrucks.Party',
+                '</span>"</p>',
+                this.getInfoWindowShareButtons(),
+                '</p></div>'].join('');
+
+    if (this._translator) {
+      html = this._translator.translateElement($(html)).html();
+    }
+
     return html;
 };
 
@@ -549,7 +591,7 @@ google.load('maps', '3', {
   callback: initialize
 });
 
-})(window, jQuery, google);
+})(window, jQuery, google, TacoTranslator);
 
 
 
