@@ -1,6 +1,6 @@
 /* global google, jQuery */
 
-(function(window, $, google) {
+(function(window, $, google, TacoTranslator) {
 
 /**
  * Configuration values for Firebase, Google, and TacoMap options.
@@ -121,11 +121,24 @@ var TacoMap = function(mapEl, database, initialPosition, initialZoom) {
     zIndex: 10
   });
 
-  if (initialPosition) {
-    this._iw.setContent($(CONFIG.TACO_MAP.initialMessageWithPos).html());
-  } else {
-    this._iw.setContent($(CONFIG.TACO_MAP.initialMessage).html());
-  }
+  // translate page and get reference to translator
+  this._translator = new TacoTranslator();
+
+  // translate popup messages once translator loaded
+  var self = this;
+  self._translator.initialize().then(function() {
+    var $positionedMessage = $(CONFIG.TACO_MAP.initialMessageWithPos);
+    var $message = $(CONFIG.TACO_MAP.initialMessage);
+
+    $positionedMessage = self._translator.translatePhraseInElement($positionedMessage);
+    $message = self._translator.translatePhraseInElement($message);
+
+    if (initialPosition) {
+      self._iw.setContent($positionedMessage.html());
+    } else {
+      self._iw.setContent($message.html());
+    }
+  });
 
   /** @private {boolean} Whether or not this has been initialized. */
   this._isInitialized = false;
@@ -549,7 +562,7 @@ google.load('maps', '3', {
   callback: initialize
 });
 
-})(window, jQuery, google);
+})(window, jQuery, google, TacoTranslator);
 
 
 
