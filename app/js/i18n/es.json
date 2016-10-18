@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "title": "TacoTrucks.Party | Obtenga una camioneta de tacos virtual",
     "make-reality": "Haga #CamionetaDeTacosEnCadaEsquina una realidad.",
     "description-text-start": "Cuando un seguidor de Trump",
@@ -24,4 +25,31 @@
     "tweet-text": "Acabo de patrocinar una camioneta de tacos virtual. Usted tambien. Camionetas de tacos en cada esquina.",
     "tell-friends": "Dile a sus amigos",
     "tell-friends-message": "Acabo de patrocinar una camioneta de tacos en TacoTrucks.Party"
+=======
+    "title": "!TacoTrucks.Party | Obtenga una camioneta de tacos virtual",
+    "make-reality": "!Haga #CamionetaDeTacosEnCadaEsquina una realidad.",
+    "description-text-start": "!Cuando un seguidor de Trump",
+    "description-text-link": "!advirtió",
+    "description-text-end": "!que inmigración daría lugar a \"camionetas de tacos en cada esquina,\" pensamos que sonaba fantástico.  Ayudanos hacer este sueño Americano una realidad Americana -- coloque una camioneta de tacos en el mapa, y compártelo con amigos!",
+    "donate": "!Done",
+    "tweet": "!Tweet",
+    "share": "!Comparte",
+    "built-by": "!Construido por",
+    "devprogress-link": "!DevProgress",
+    "want-to-help": "!Quiere ayudar? Es de",
+    "repo-link": "!codigo abierto",
+    "icon-attribution": "!Ícono de camioneta de taco construido por Jane Ruby usando",
+    "truck": "!Truck",
+    "truck-icon-attribution": "!por John Caserta y",
+    "taco": "!Taco",
+    "taco-icon-attribution": "!por Focus Lab, del",
+    "noun-project-link": "!The Noun Project",
+    "popup-instructions": "!Arrastre la camioneta de tacos, entonces",
+    "sponsor": "!Patrocine",
+    "popup-tooltip": "!Su propia camioneta de tacos (virtual)!",
+    "donation-error": "!Algo salío mal al intentar guardar su camioneta. Inténtalo de nuevo.",
+    "tweet-text": "!Acabo de patrocinar una camioneta de tacos virtual. Usted tambien. Camionetas de tacos en cada esquina.",
+    "tell-friends": "!Dile a sus amigos",
+    "tell-friends-message": "!Acabo de patrocinar una camioneta de tacos en TacoTrucks.Party"
+>>>>>>> develop
 }
