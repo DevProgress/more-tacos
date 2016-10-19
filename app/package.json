@@ -37,6 +37,7 @@
     "gulp-htmlmin": "~3.0.0",
     "gulp-imagemin": "~3.0.3",
     "gulp-jshint": "~2.0.1",
+    "gulp-jsonminify": "~1.0.0",
     "gulp-run": "~1.7.1",
     "gulp-uglify": "~2.0.0",
     "jshint": "~2.9.3",

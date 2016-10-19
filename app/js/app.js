@@ -330,10 +330,13 @@ TacoMap.prototype.getShareLinks = function() {
     // pulls from the updated url
     var url = encodeURIComponent(window.location.href);
 
-    var tweetText = "I just sponsored a virtual taco truck. You can, too. Taco trucks on every corner.";
-
+    var tweetText;
     if (this._translator) {
       tweetText = this._translator.translatePhrase('tweet-text');
+    }
+
+    if (!tweetText) {
+      tweetText = "I just sponsored a virtual taco truck. You can, too. Taco trucks on every corner.";
     }
 
     return {
