@@ -69,8 +69,8 @@ gulp.task('copy:scripts', function() {
 });
 
 gulp.task('copy:translations', function() {
-    return gulp.src('js/i8ln/*.json')
-        .pipe(gulp.dest('dist/js/i8ln'));
+    return gulp.src('js/i18n/*.json')
+        .pipe(gulp.dest('dist/js/i18n'));
 });
 
 gulp.task('copy:css', function() {
@@ -103,7 +103,7 @@ gulp.task('lint', function() {
 });
 
 gulp.task('build:production', ['clean', 'lint', 'minify:vendor', 'minify:scripts', 'minify:html',
-          'minify:images', 'minify:json', 'copy:css', 'copy:translations']);
+          'minify:images', 'minify:json', 'copy:css']);
 gulp.task('build:development', ['clean', 'lint', 'copy:vendor', 'copy:scripts', 'copy:html',
           'minify:images', 'copy:css', 'copy:translations']);
 
