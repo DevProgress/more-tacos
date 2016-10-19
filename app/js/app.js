@@ -125,20 +125,22 @@ var TacoMap = function(mapEl, database, initialPosition, initialZoom) {
   this._translator = new TacoTranslator();
 
   // translate popup messages once translator loaded
-  var self = this;
-  self._translator.initialize().then(function() {
+  this._translator.initialize().then(function() {
     var $positionedMessage = $(CONFIG.TACO_MAP.initialMessageWithPos);
     var $message = $(CONFIG.TACO_MAP.initialMessage);
 
-    $positionedMessage = self._translator.translateElement($positionedMessage);
-    $message = self._translator.translateElement($message);
+    $positionedMessage = this._translator.translateElement($positionedMessage);
+    $message = this._translator.translateElement($message);
 
     if (initialPosition) {
-      self._iw.setContent($positionedMessage.html());
+      this._iw.setContent($positionedMessage.html());
     } else {
-      self._iw.setContent($message.html());
+      this._iw.setContent($message.html());
     }
-  });
+
+    // set tweet text for popup on map
+    this._iw.setContent(this.getInfoWindowHTML());
+  }.bind(this));
 
   /** @private {boolean} Whether or not this has been initialized. */
   this._isInitialized = false;
@@ -307,7 +309,6 @@ TacoMap.prototype.saveMarker = function() {
     });
 
     // Display the donation/share CTA.
-    this._iw.setContent(this.getInfoWindowHTML());
     this._iw.open(this._map, this._userMarker);
     // need to add this here because it wasn't in the DOM before
     $('.log-action').on('click', function(self) {
@@ -361,7 +362,7 @@ TacoMap.prototype.getShareLinks = function() {
                   url,
                   '&text=',
                   encodeURIComponent(tweetText),
-                  '&hashtags=ImWithHer,TacoTrucksOnEveryCorner'].join(''),
+                  ' &hashtags=ImWithHer,TacoTrucksOnEveryCorner'].join(''),
         facebook: 'http://facebook.com/sharer/sharer.php?u='+ url
     };
 
@@ -559,22 +560,39 @@ function initialize() {
     tacoMap.logAction($(this).attr('data-action'));
   });
 
-  /**
-   * Set the initial share links and watch for changes to the hash
- */
+  // translate popup messages once translator loaded
+  this._translator.initialize().then(function() {
+    var $positionedMessage = $(CONFIG.TACO_MAP.initialMessageWithPos);
+    var $message = $(CONFIG.TACO_MAP.initialMessage);
 
-  createShareLinks(tacoMap);
+    $positionedMessage = this._translator.translateElement($positionedMessage);
+    $message = this._translator.translateElement($message);
 
-  $(tacoMap._map).on('updatedHash', function(event) {
-     createShareLinks(tacoMap);
-  });
+    if (initialPosition) {
+      this._iw.setContent($positionedMessage.html());
+    } else {
+      this._iw.setContent($message.html());
+    }
 
-  $('body').on('.js-share-twitter,.js-share-facebook', 'click', function(event) {
-      event.preventDefault();
+    // set tweet text for popup on map
+    this._iw.setContent(this.getInfoWindowHTML());
 
-      var url = $(this).attr('href');
-      handleShareLinks(url, 400,400);
-  });
+    /**
+    * Set the initial share links and watch for changes to the hash
+    */
+
+    createShareLinks(tacoMap);
+
+    $(tacoMap._map).on('updatedHash', function(event) {
+       createShareLinks(tacoMap);
+    });
+
+    $('body').on('.js-share-twitter,.js-share-facebook', 'click', function(event) {
+        event.preventDefault();
+        var url = $(this).attr('href');
+        handleShareLinks(url, 400,400);
+    });
+  }.bind(this));
 
 }
 
