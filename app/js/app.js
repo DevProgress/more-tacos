@@ -121,27 +121,6 @@ var TacoMap = function(mapEl, database, initialPosition, initialZoom) {
     zIndex: 10
   });
 
-  // translate page and get reference to translator
-  this._translator = new TacoTranslator();
-
-  // translate popup messages once translator loaded
-  this._translator.initialize().then(function() {
-    var $positionedMessage = $(CONFIG.TACO_MAP.initialMessageWithPos);
-    var $message = $(CONFIG.TACO_MAP.initialMessage);
-
-    $positionedMessage = this._translator.translateElement($positionedMessage);
-    $message = this._translator.translateElement($message);
-
-    if (initialPosition) {
-      this._iw.setContent($positionedMessage.html());
-    } else {
-      this._iw.setContent($message.html());
-    }
-
-    // set tweet text for popup on map
-    this._iw.setContent(this.getInfoWindowHTML());
-  }.bind(this));
-
   /** @private {boolean} Whether or not this has been initialized. */
   this._isInitialized = false;
 
@@ -554,35 +533,34 @@ function initialize() {
     }
 
     tacoMap.saveMarker();
+    // set tweet text for popup on map
+    tacoMap._iw.setContent(tacoMap.getInfoWindowHTML());
     return true;
   });
+
   $('.log-action').on('click', function() {
     tacoMap.logAction($(this).attr('data-action'));
   });
 
+  // translate page and get reference to translator
+  tacoMap._translator = new TacoTranslator();
+
   // translate popup messages once translator loaded
-  this._translator.initialize().then(function() {
+  tacoMap._translator.initialize().then(function() {
     var $positionedMessage = $(CONFIG.TACO_MAP.initialMessageWithPos);
     var $message = $(CONFIG.TACO_MAP.initialMessage);
 
-    $positionedMessage = this._translator.translateElement($positionedMessage);
-    $message = this._translator.translateElement($message);
+    $positionedMessage = tacoMap._translator.translateElement($positionedMessage);
+    $message = tacoMap._translator.translateElement($message);
 
-    if (initialPosition) {
-      this._iw.setContent($positionedMessage.html());
+    if (initialPos) {
+      tacoMap._iw.setContent($positionedMessage.html());
     } else {
-      this._iw.setContent($message.html());
+      tacoMap._iw.setContent($message.html());
     }
 
-    // set tweet text for popup on map
-    this._iw.setContent(this.getInfoWindowHTML());
-
-    /**
-    * Set the initial share links and watch for changes to the hash
-    */
-
     createShareLinks(tacoMap);
-
+    // Watch for changes to the hash for share links
     $(tacoMap._map).on('updatedHash', function(event) {
        createShareLinks(tacoMap);
     });
@@ -593,7 +571,6 @@ function initialize() {
         handleShareLinks(url, 400,400);
     });
   }.bind(this));
-
 }
 
 /**

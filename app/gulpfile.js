@@ -95,7 +95,7 @@ gulp.task('lint', function() {
         .pipe(jshint.reporter('default'));
 });
 
-gulp.task('build:production', ['clean', 'lint', 'minfy:vendor', 'minify:scripts', 'minify:html',
+gulp.task('build:production', ['clean', 'lint', 'minify:vendor', 'minify:scripts', 'minify:html',
           'minify:images', 'copy:css', 'copy:translations']);
 gulp.task('build:development', ['clean', 'lint', 'copy:vendor', 'copy:scripts', 'copy:html',
           'minify:images', 'copy:css', 'copy:translations']);

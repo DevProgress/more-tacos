@@ -49,7 +49,7 @@ TacoTranslator = (function(window, $, Polyglot) {
      * Translate an HTML snippet. Expects `translate` to have already been called.
      *
      * @param {Object} $el jQuery element to translate
-     * @returns {Object} $el jQuery element, translated 
+     * @returns {Object} $el jQuery element, translated
      */
     function translateElement($el) {
         if (!locale || !phrases) {
@@ -57,7 +57,7 @@ TacoTranslator = (function(window, $, Polyglot) {
         }
 
         var phraseNames = Object.keys(phrases);
-        
+
         for (var i = 0; i < phraseNames.length; i++) {
             var phraseName = phraseNames[i];
             $el.find('.i18n-' + phraseName).text(polyglot.t(phraseName));
@@ -109,7 +109,7 @@ TacoTranslator = (function(window, $, Polyglot) {
         }
 
         var phraseNames = Object.keys(phrases);
-        
+
         for (var i = 0; i < phraseNames.length; i++) {
             var phraseName = phraseNames[i];
             $('.i18n-' + phraseName).text(polyglot.t(phraseName));
